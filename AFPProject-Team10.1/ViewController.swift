@@ -12,7 +12,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     let captureSession = AVCaptureSession()
     var previewLayer: CALayer!
-        
+    
     var captureDevice: AVCaptureDevice!
     
     var firstAccess = true
@@ -22,6 +22,10 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         // Do any additional setup after loading the view.
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        prepareCamera()
+    }
     
     func prepareCamera() {
         captureSession.sessionPreset = AVCaptureSession.Preset.photo
@@ -42,26 +46,26 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
         let previewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession)
         
-        
-            self.previewLayer = previewLayer
-            self.view.layer.addSublayer(self.previewLayer)
-            self.previewLayer.frame = self.view.layer.frame
-            captureSession.startRunning()
-        
-            let dataOutput = AVCaptureVideoDataOutput()
-                dataOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as String):NSNumber(value:kCVPixelFormatType_32BGRA)]
+        self.previewLayer.cornerRadius = 10
+        self.previewLayer = previewLayer
+        self.view.layer.addSublayer(self.previewLayer)
+        self.previewLayer.frame = self.view.layer.frame
+        captureSession.startRunning()
+    
+        let dataOutput = AVCaptureVideoDataOutput()
+            dataOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as String):NSNumber(value:kCVPixelFormatType_32BGRA)]
+            
+            dataOutput.alwaysDiscardsLateVideoFrames = true
+            
+            if captureSession.canAddOutput(dataOutput) {
+                captureSession.addOutput(dataOutput)
+            }
+            
+            captureSession.commitConfiguration()
+            
                 
-                dataOutput.alwaysDiscardsLateVideoFrames = true
-                
-                if captureSession.canAddOutput(dataOutput) {
-                    captureSession.addOutput(dataOutput)
-                }
-                
-                captureSession.commitConfiguration()
-                
-                
-                let queue = DispatchQueue(label: "com.brianadvent.captureQueue")
-                dataOutput.setSampleBufferDelegate(self, queue: queue)
+            let queue = DispatchQueue(label: "com.brianadvent.captureQueue")
+            dataOutput.setSampleBufferDelegate(self, queue: queue)
     }
 }
 
