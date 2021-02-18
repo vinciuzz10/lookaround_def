@@ -14,6 +14,9 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     var bufferSize: CGSize = .zero
     var rootLayer: CALayer! = nil
     
+    var myTimer = 0.4
+    var flag = false
+    
     @IBOutlet weak private var previewView: UIView!
     private let session = AVCaptureSession()
     private var previewLayer: AVCaptureVideoPreviewLayer! = nil
@@ -26,6 +29,20 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     override func viewDidLoad() {
+        DispatchQueue.global(qos: .background).async {
+            while true {
+                Timer.scheduledTimer(withTimeInterval: TimeInterval(self.myTimer), repeats: false) { _ in
+                    if(self.flag == true){
+                        let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .medium)
+                        impactFeedbackgenerator.prepare()
+                        impactFeedbackgenerator.impactOccurred()
+                        
+                    }
+                }
+                RunLoop.current.run()
+                
+            }
+        }
         super.viewDidLoad()
         setupAVCapture()
     }
