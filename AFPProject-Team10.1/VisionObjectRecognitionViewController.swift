@@ -10,6 +10,8 @@ import AVFoundation
 import Vision
 
 class VisionObjectRecognitionViewController: ViewController {
+
+    var object: String!
     
     private var detectionOverlay: CALayer! = nil
     
@@ -35,7 +37,6 @@ class VisionObjectRecognitionViewController: ViewController {
                 })
             })
             self.requests = [objectRecognition]
-             
         } catch let error as NSError {
             print("Model loading went wrong: \(error)")
         }
@@ -58,13 +59,13 @@ class VisionObjectRecognitionViewController: ViewController {
             // Select only the label with the highest confidence.
             let topLabelObservation = objectObservation.labels[0]
             
-            if topLabelObservation.identifier == "tvmonitor" {
+            if topLabelObservation.identifier == self.object!.lowercased() {
                 
                 localflag = true
                 let objectBounds = VNImageRectForNormalizedRect(objectObservation.boundingBox, Int(bufferSize.width), Int(bufferSize.height))
                     
                 let area = objectBounds.height * objectBounds.width
-//                print(area)
+                print(area)
                 let val = ((area-8000)/(307200-10000)) * 0.4
                 if timer1 < Double(val) {
                     timer1 = Double(val)
@@ -141,7 +142,7 @@ class VisionObjectRecognitionViewController: ViewController {
         CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
         
         // rotate the layer into screen orientation and scale and mirror
-        detectionOverlay.setAffineTransform(CGAffineTransform(rotationAngle: CGFloat(.pi / 2.0)).scaledBy(x: scale, y: -scale))
+        detectionOverlay.setAffineTransform(CGAffineTransform(rotationAngle: CGFloat(0)).scaledBy(x: scale, y: -scale))
         // center the layer
         detectionOverlay.position = CGPoint(x: bounds.midX, y: bounds.midY)
         
@@ -176,8 +177,5 @@ class VisionObjectRecognitionViewController: ViewController {
         shapeLayer.cornerRadius = 7
         return shapeLayer
     }
-    
-    
-    
     
 }

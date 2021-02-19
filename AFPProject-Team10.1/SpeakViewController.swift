@@ -20,19 +20,10 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate  {
     private var recognitionTask: SFSpeechRecognitionTask?
     
     private let audioEngine = AVAudioEngine()
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
     let labels = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat", "traffic light", "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe", "backpack", "umbrella", "handbag", "tie", "suitcase", "frisbee", "skis", "snowboard", "sports ball", "kite", "baseball bat", "baseball glove", "skateboard", "surfboard", "tennis racket", "bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl", "banana", "apple", "sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza", "donut", "cake", "chair", "sofa", "pottedplant", "bed", "diningtable", "toilet", "tvmonitor", "laptop", "mouse", "remote", "keyboard", "cell phone", "microwave", "oven", "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors", "teddy bear", "hair drier", "toothbrush"]
+    
+    
     
     // MARK: View Controller Lifecycle
     
@@ -180,7 +171,7 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate  {
             //            textView.text! = " "
             self.label.text! = "Stopping"
             if labels.contains(textView.text.lowercased()) {
-                let utterance = AVSpeechUtterance(string: "I can recognize " + textView.text!)
+                let utterance = AVSpeechUtterance(string: "I will search for a " + textView.text!)
                 utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
                 utterance.rate = 0.5
                 
@@ -192,26 +183,34 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate  {
                 do {
                     disableAVSession()
                 }
-                
                 performSegue(withIdentifier: "showSearch", sender: nil)
-                
             }
             else{
-                let utterance = AVSpeechUtterance(string: "I cannot recognize " + textView.text! + " please try again")
-                utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
-                utterance.rate = 0.5
-                
-                let synthetizer = AVSpeechSynthesizer()
-                
-                let _: () = DispatchQueue.main.async {
+                if self.textView.text! == "Go ahead, I'm listening" {
+                    let utterance = AVSpeechUtterance(string: "I didn't understand, please try again")
+                    utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+                    utterance.rate = 0.5
+                    
+                    let synthetizer = AVSpeechSynthesizer()
                     synthetizer.speak(utterance)
                 }
-                do {
-                    disableAVSession()
+                else {
+                    let utterance = AVSpeechUtterance(string: "I cannot recognize " + textView.text! + ". Please try again")
+                    utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+                    utterance.rate = 0.5
+                    
+                    let synthetizer = AVSpeechSynthesizer()
+                    
+                    let _: () = DispatchQueue.main.async {
+                        synthetizer.speak(utterance)
+                    }
+                    do {
+                        disableAVSession()
+                    }
                 }
             }
         } else {
-            
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             do {
                 try startRecording()
                 self.label.text! = "Shake device to stop recording"
@@ -228,4 +227,15 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate  {
         }
     }
 
+    // MARK: Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        
+        case  "showSearch":
+            let dstview = segue.destination as! VisionObjectRecognitionViewController
+            dstview.object = self.textView.text
+        
+        default: print(#function)
+        }
+    }
 }

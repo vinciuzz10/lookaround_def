@@ -1,10 +1,3 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-Contains the view controller for the Breakfast Finder.
-*/
-
 import UIKit
 import AVFoundation
 import Vision
@@ -16,7 +9,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     var myTimer = 0.4
     var flag = false
-    var dispatchWorkItem:DispatchWorkItem?
+    
+    var dispatchWorkItem: DispatchWorkItem?
     
     @IBOutlet weak private var previewView: UIView!
     private let session = AVCaptureSession()
@@ -25,14 +19,11 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     private let videoDataOutputQueue = DispatchQueue(label: "VideoDataOutput", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
     
-    
-    
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         // to be implemented in the subclass
     }
     
     override func viewDidLoad() {
-        
         self.dispatchWorkItem = DispatchWorkItem(block: {
             while self.dispatchWorkItem?.isCancelled == false {
                 Timer.scheduledTimer(withTimeInterval: TimeInterval(self.myTimer), repeats: false) { _ in
@@ -40,18 +31,17 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                         let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .medium)
                         impactFeedbackgenerator.prepare()
                         impactFeedbackgenerator.impactOccurred()
-                        
                     }
                 }
                 RunLoop.current.run()
-                
             }
         })
-        
+
         DispatchQueue.global().async(execute: self.dispatchWorkItem!)
-        
         super.viewDidLoad()
         setupAVCapture()
+        
+        UIApplication.shared.isIdleTimerDisabled = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -138,24 +128,19 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         case UIDeviceOrientation.landscapeRight:      // Device oriented horizontally, home button on the left
             exifOrientation = .down
         case UIDeviceOrientation.portrait:            // Device oriented vertically, home button on the bottom
-            exifOrientation = .up
+            exifOrientation = .right
         default:
-            exifOrientation = .up
+            exifOrientation = .right
         }
         return exifOrientation
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        
-        
         DispatchQueue.global().async {
-            
             self.dispatchWorkItem?.cancel()
         }
         super.viewDidDisappear(animated)
         dismiss(animated: true, completion: nil)
-        print("finito")
     }
+    
 }
-
-   
