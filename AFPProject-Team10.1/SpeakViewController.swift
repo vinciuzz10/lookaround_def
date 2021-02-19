@@ -7,9 +7,21 @@
 
 import UIKit
 import Speech
+import AudioToolbox
 
-class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate  {
+extension UITextView {
+    func centerVertically() {
+        let fittingSize = CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude)
+        let size = sizeThatFits(fittingSize)
+        let topOffset = (bounds.size.height - size.height * zoomScale) / 2
+        let positiveTopOffset = max(1, topOffset)
+        contentOffset.y = -positiveTopOffset
+    }
+}
 
+class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITextViewDelegate  {
+
+    @IBOutlet weak var micImage: UIImageView!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var textView: UITextView!
     
@@ -27,11 +39,21 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate  {
     
     // MARK: View Controller Lifecycle
     
+    
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
-        self.becomeFirstResponder()
         
+        self.becomeFirstResponder()
+        self.textView.delegate = self
+        self.textView.layer.cornerRadius = 20
+        textView.clipsToBounds = false
+        textView.layer.shadowColor = UIColor.systemGray2.cgColor
+        textView.layer.shadowOpacity=0.4
+        textView.layer.shadowOffset = CGSize(width: 3, height: 3)
         // Disable the record buttons until authorization has been granted.
+        
+       
         label.text = "Shake device to start recording"
     }
     
@@ -156,10 +178,13 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate  {
     }
     
     
+    
     // MARK: Interface Builder actions
     
     func shaked() {
         if audioEngine.isRunning {
+            
+            
             do {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord, mode: .default, options: .defaultToSpeaker)
                 try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
@@ -170,6 +195,7 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate  {
             recognitionRequest?.endAudio()
             //            textView.text! = " "
             self.label.text! = "Stopping"
+            
             if labels.contains(textView.text.lowercased()) {
                 let utterance = AVSpeechUtterance(string: "I will search for a " + textView.text!)
                 utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
@@ -209,7 +235,9 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate  {
                     }
                 }
             }
+            
         } else {
+            micImage.tintColor = UIColor.systemPink
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             do {
                 try startRecording()
@@ -232,6 +260,8 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate  {
         switch segue.identifier {
         
         case  "showSearch":
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            micImage.tintColor = UIColor.systemGray2
             let dstview = segue.destination as! VisionObjectRecognitionViewController
             dstview.object = self.textView.text
         

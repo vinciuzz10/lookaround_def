@@ -17,33 +17,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFC-4b-LaZ">
-                                <rect key="frame" x="186" y="865" width="42" height="21"/>
+                                <rect key="frame" x="186.5" y="831" width="41.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9o-nZ-2cg">
-                                <rect key="frame" x="32" y="121" width="351" height="230"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Laptop" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9o-nZ-2cg">
+                                <rect key="frame" x="30" y="165" width="355" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemPinkColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="64"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mic.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Kiw-CM-ytN">
+                                <rect key="frame" x="87" y="427.5" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="EUv-Zg-E5h"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                        <color key="tintColor" systemColor="systemGray2Color"/>
                         <constraints>
-                            <constraint firstItem="JFC-4b-LaZ" firstAttribute="top" secondItem="B9o-nZ-2cg" secondAttribute="bottom" constant="514" id="6Of-Sl-pfh"/>
-                            <constraint firstItem="EUv-Zg-E5h" firstAttribute="trailing" secondItem="B9o-nZ-2cg" secondAttribute="trailing" constant="31" id="74J-RH-rUd"/>
-                            <constraint firstItem="B9o-nZ-2cg" firstAttribute="top" secondItem="EUv-Zg-E5h" secondAttribute="top" constant="33" id="GPt-ah-eoA"/>
-                            <constraint firstItem="JFC-4b-LaZ" firstAttribute="leading" secondItem="EUv-Zg-E5h" secondAttribute="leading" constant="186" id="MqG-rL-CiC"/>
-                            <constraint firstItem="JFC-4b-LaZ" firstAttribute="top" secondItem="EUv-Zg-E5h" secondAttribute="top" constant="777" id="UoU-MA-nMM"/>
-                            <constraint firstItem="B9o-nZ-2cg" firstAttribute="leading" secondItem="EUv-Zg-E5h" secondAttribute="leading" constant="32" id="rv6-H6-ht3"/>
+                            <constraint firstItem="EUv-Zg-E5h" firstAttribute="bottom" secondItem="JFC-4b-LaZ" secondAttribute="bottom" constant="10" id="Ja2-bi-XaJ"/>
+                            <constraint firstItem="JFC-4b-LaZ" firstAttribute="centerX" secondItem="EUv-Zg-E5h" secondAttribute="centerX" id="XG2-Ai-FbM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Ju2-IS-WHv"/>
                     <connections>
                         <outlet property="label" destination="JFC-4b-LaZ" id="02C-cT-hHh"/>
+                        <outlet property="micImage" destination="Kiw-CM-ytN" id="knB-Or-CGH"/>
                         <outlet property="textView" destination="B9o-nZ-2cg" id="acu-xe-5W5"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="showSearch" id="CSX-ah-OXy"/>
                     </connections>
@@ -71,17 +74,19 @@
             </objects>
             <point key="canvasLocation" x="2851" y="94"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigation Bar Controller-->
         <scene sceneID="plB-98-E7y">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Z35-5q-i8y" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Z35-5q-i8y" customClass="NavigationBarController" customModule="AFPProject_Team10_1" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="v0u-w1-5Ot">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" systemColor="systemBlueColor"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
+                        <outlet property="navBar" destination="v0u-w1-5Ot" id="GUd-9m-mRJ"/>
                         <segue destination="mjR-Dv-X1u" kind="relationship" relationship="rootViewController" id="tpz-od-jj7"/>
                     </connections>
                 </navigationController>
@@ -91,11 +96,24 @@
         </scene>
     </scenes>
     <resources>
+        <image name="mic.fill" catalog="system" width="108" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
