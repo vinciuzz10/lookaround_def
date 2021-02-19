@@ -51,6 +51,7 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
         textView.layer.shadowColor = UIColor.systemGray2.cgColor
         textView.layer.shadowOpacity=0.4
         textView.layer.shadowOffset = CGSize(width: 3, height: 3)
+        
         // Disable the record buttons until authorization has been granted.
         
        
@@ -69,6 +70,11 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
         if motion == .motionShake {
             shaked()
         }
+    }
+    
+    override public func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        textView.text = "I'm your assistant"
     }
     
     override public func viewDidAppear(_ animated: Bool) {
