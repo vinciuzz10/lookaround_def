@@ -14,6 +14,7 @@
 		154ED08E25DA706400B789DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 154ED08D25DA706400B789DD /* Assets.xcassets */; };
 		154ED09125DA706400B789DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 154ED08F25DA706400B789DD /* LaunchScreen.storyboard */; };
 		5621FA2525DE60CF00A4438B /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5621FA2425DE60CF00A4438B /* YOLOv3.mlmodel */; };
+		5621FA3025DE755900A4438B /* SpeakViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5621FA2F25DE755900A4438B /* SpeakViewController.swift */; };
 		568CCF1B25DA825000C1F48A /* VisionObjectRecognitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568CCF1A25DA825000C1F48A /* VisionObjectRecognitionViewController.swift */; };
 		568CCF2125DA84F900C1F48A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568CCF2025DA84F800C1F48A /* ViewController.swift */; };
 /* End PBXBuildFile section */
@@ -28,6 +29,7 @@
 		154ED09025DA706400B789DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		154ED09225DA706400B789DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5621FA2425DE60CF00A4438B /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3.mlmodel; sourceTree = "<group>"; };
+		5621FA2F25DE755900A4438B /* SpeakViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakViewController.swift; sourceTree = "<group>"; };
 		568CCF1A25DA825000C1F48A /* VisionObjectRecognitionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionObjectRecognitionViewController.swift; sourceTree = "<group>"; };
 		568CCF2025DA84F800C1F48A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,6 +74,7 @@
 				154ED08F25DA706400B789DD /* LaunchScreen.storyboard */,
 				154ED09225DA706400B789DD /* Info.plist */,
 				154ED08A25DA706300B789DD /* AFPProject_Team10_1.xcdatamodeld */,
+				5621FA2F25DE755900A4438B /* SpeakViewController.swift */,
 			);
 			path = "AFPProject-Team10.1";
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5621FA2525DE60CF00A4438B /* YOLOv3.mlmodel in Sources */,
+				5621FA3025DE755900A4438B /* SpeakViewController.swift in Sources */,
 				568CCF2125DA84F900C1F48A /* ViewController.swift in Sources */,
 				154ED08225DA706300B789DD /* AppDelegate.swift in Sources */,
 				154ED08C25DA706300B789DD /* AFPProject_Team10_1.xcdatamodeld in Sources */,

@@ -16,6 +16,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     var myTimer = 0.4
     var flag = false
+    var dispatchWorkItem:DispatchWorkItem?
     
     @IBOutlet weak private var previewView: UIView!
     private let session = AVCaptureSession()
@@ -24,13 +25,16 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     private let videoDataOutputQueue = DispatchQueue(label: "VideoDataOutput", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
     
+    
+    
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         // to be implemented in the subclass
     }
     
     override func viewDidLoad() {
-        DispatchQueue.global(qos: .background).async {
-            while true {
+        
+        self.dispatchWorkItem = DispatchWorkItem(block: {
+            while self.dispatchWorkItem?.isCancelled == false {
                 Timer.scheduledTimer(withTimeInterval: TimeInterval(self.myTimer), repeats: false) { _ in
                     if(self.flag == true){
                         let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .medium)
@@ -42,7 +46,10 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                 RunLoop.current.run()
                 
             }
-        }
+        })
+        
+        DispatchQueue.global().async(execute: self.dispatchWorkItem!)
+        
         super.viewDidLoad()
         setupAVCapture()
     }
@@ -137,5 +144,18 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
         return exifOrientation
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        
+        DispatchQueue.global().async {
+            
+            self.dispatchWorkItem?.cancel()
+        }
+        super.viewDidDisappear(animated)
+        dismiss(animated: true, completion: nil)
+        print("finito")
+    }
 }
 
+   

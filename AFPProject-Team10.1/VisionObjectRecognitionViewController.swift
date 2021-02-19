@@ -35,6 +35,7 @@ class VisionObjectRecognitionViewController: ViewController {
                 })
             })
             self.requests = [objectRecognition]
+             
         } catch let error as NSError {
             print("Model loading went wrong: \(error)")
         }
@@ -63,7 +64,7 @@ class VisionObjectRecognitionViewController: ViewController {
                 let objectBounds = VNImageRectForNormalizedRect(objectObservation.boundingBox, Int(bufferSize.width), Int(bufferSize.height))
                     
                 let area = objectBounds.height * objectBounds.width
-                print(area)
+//                print(area)
                 let val = ((area-8000)/(307200-10000)) * 0.4
                 if timer1 < Double(val) {
                     timer1 = Double(val)
@@ -175,5 +176,8 @@ class VisionObjectRecognitionViewController: ViewController {
         shapeLayer.cornerRadius = 7
         return shapeLayer
     }
+    
+    
+    
     
 }
