@@ -141,6 +141,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
         super.viewDidDisappear(animated)
         dismiss(animated: true, completion: nil)
+		session.stopRunning()
     }
     
 }

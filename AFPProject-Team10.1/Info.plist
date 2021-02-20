@@ -21,9 +21,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Vuoi usare la videocamera?</string>
+	<string>Allow LookAround to access the camera to detect objects.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string></string>
+	<string>Allow LookAround to access the microphone to detect your voice.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string></string>
 	<key>UIApplicationSceneManifest</key>

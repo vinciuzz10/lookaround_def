@@ -10,7 +10,6 @@ import AVFoundation
 import Vision
 
 class VisionObjectRecognitionViewController: ViewController {
-
     var object: String!
     
     private var detectionOverlay: CALayer! = nil
@@ -23,7 +22,7 @@ class VisionObjectRecognitionViewController: ViewController {
         // Setup Vision parts
         let error: NSError! = nil
         
-        guard let modelURL = Bundle.main.url(forResource: "YOLOv3", withExtension: "mlmodelc") else {
+        guard let modelURL = Bundle.main.url(forResource: "YOLOv3Int8LUT", withExtension: "mlmodelc") else {
             return NSError(domain: "VisionObjectRecognitionViewController", code: -1, userInfo: [NSLocalizedDescriptionKey: "Model file is missing"])
         }
         do {
