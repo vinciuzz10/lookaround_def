@@ -203,9 +203,6 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
 			if (session.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
 				AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
 					if granted {
-						print("a")
-						self.denied = false
-						
 						do {
 							try  self.session.setCategory(AVAudioSession.Category.playAndRecord, mode: .default, options: .defaultToSpeaker)
 							try self.session.setActive(true, options: .notifyOthersOnDeactivation)
@@ -216,7 +213,6 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
 							print("Couldn't set Audio session category")
 						}
 					} else{
-						print("b")
 						self.denied = true
 					}
 				})

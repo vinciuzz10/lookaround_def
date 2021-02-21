@@ -48,6 +48,28 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+	
+	func showAlert(){
+		// Create new Alert
+		let dialogMessage = UIAlertController(title: "Alert", message: "Please grant access to Camera in Settings", preferredStyle: .alert)
+		// Create OK button with action handler
+		let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+			let settingsUrl = NSURL(string: UIApplication.openSettingsURLString)
+			if settingsUrl != nil {
+				UIApplication.shared.open(settingsUrl! as URL)
+			}
+		}
+		
+		let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (_) -> Void in
+			self.dismiss(animated: true, completion: nil)
+		}
+		dialogMessage.addAction(settingsAction)
+		dialogMessage.addAction(cancelAction)
+		
+		//Add OK button to a dialog message
+		// Present Alert to
+		self.present(dialogMessage, animated: true, completion: nil)
+	}
     
     func setupAVCapture() {
         var deviceInput: AVCaptureDeviceInput!
@@ -57,7 +79,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         do {
             deviceInput = try AVCaptureDeviceInput(device: videoDevice!)
         } catch {
-            print("Could not create video device input: \(error)")
+			showAlert()
             return
         }
         
