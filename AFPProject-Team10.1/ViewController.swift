@@ -51,16 +51,16 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
 	
 	func showAlert(){
 		// Create new Alert
-		let dialogMessage = UIAlertController(title: "Alert", message: "Please grant access to Camera in Settings", preferredStyle: .alert)
+		let dialogMessage = UIAlertController(title: "Alert", message: "Garantire l'accesso alla Fotocamera nelle Impostazioni", preferredStyle: .alert)
 		// Create OK button with action handler
-		let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+		let settingsAction = UIAlertAction(title: "Impostazioni", style: .default) { (_) -> Void in
 			let settingsUrl = NSURL(string: UIApplication.openSettingsURLString)
 			if settingsUrl != nil {
 				UIApplication.shared.open(settingsUrl! as URL)
 			}
 		}
 		
-		let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (_) -> Void in
+		let cancelAction = UIAlertAction(title: "Cancella", style: .default) { (_) -> Void in
 			self.dismiss(animated: true, completion: nil)
 		}
 		dialogMessage.addAction(settingsAction)

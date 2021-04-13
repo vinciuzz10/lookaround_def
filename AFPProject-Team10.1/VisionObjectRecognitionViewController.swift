@@ -73,9 +73,7 @@ class VisionObjectRecognitionViewController: ViewController {
                 
                 let shapeLayer = self.createRoundedRectLayerWithBounds(objectBounds)
                 
-                let textLayer = self.createTextSubLayerInBounds(objectBounds,
-                                                                identifier: topLabelObservation.identifier,
-                                                                confidence: topLabelObservation.confidence)
+                let textLayer = self.createTextSubLayerInBounds(objectBounds, identifier: topLabelObservation.identifier, confidence: topLabelObservation.confidence)
                 shapeLayer.addSublayer(textLayer)
                 detectionOverlay.addSublayer(shapeLayer)
             }

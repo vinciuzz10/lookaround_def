@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Recognition-->
+        <!--Riconoscimento-->
         <scene sceneID="CWm-Ib-r5t">
             <objects>
                 <viewController id="mjR-Dv-X1u" customClass="SpeakViewController" customModule="AFPProject_Team10_1" customModuleProvider="target" sceneMemberID="viewController">
@@ -53,7 +53,7 @@
                             <constraint firstItem="EUv-Zg-E5h" firstAttribute="trailing" secondItem="B9o-nZ-2cg" secondAttribute="trailing" constant="29" id="sur-0O-Lgs"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Recognition" id="Ju2-IS-WHv"/>
+                    <navigationItem key="navigationItem" title="Riconoscimento" id="Ju2-IS-WHv"/>
                     <connections>
                         <outlet property="label" destination="JFC-4b-LaZ" id="02C-cT-hHh"/>
                         <outlet property="micImage" destination="Kiw-CM-ytN" id="knB-Or-CGH"/>
@@ -65,7 +65,7 @@
             </objects>
             <point key="canvasLocation" x="1889.8550724637682" y="93.75"/>
         </scene>
-        <!--Search-->
+        <!--Ricerca-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="VisionObjectRecognitionViewController" customModule="AFPProject_Team10_1" customModuleProvider="target" sceneMemberID="viewController">
@@ -75,7 +75,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Search" id="53e-zQ-lEJ"/>
+                    <navigationItem key="navigationItem" title="Ricerca" id="53e-zQ-lEJ"/>
                     <connections>
                         <outlet property="previewView" destination="8bC-Xf-vdC" id="LdJ-IO-0an"/>
                     </connections>

@@ -9,23 +9,13 @@ import UIKit
 import Speech
 import AudioToolbox
 
-extension UITextView {
-    func centerVertically() {
-        let fittingSize = CGSize(width: bounds.width, height: CGFloat.greatestFiniteMagnitude)
-        let size = sizeThatFits(fittingSize)
-        let topOffset = (bounds.size.height - size.height * zoomScale) / 2
-        let positiveTopOffset = max(1, topOffset)
-        contentOffset.y = -positiveTopOffset
-    }
-}
-
-class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITextViewDelegate  {
+class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
 
     @IBOutlet weak var micImage: UIImageView!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var textView: UITextView!
     
-    private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))!
+    private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "it-IT"))!
     
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     
@@ -35,30 +25,26 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
 	
 	let session = AVAudioSession.sharedInstance()
 
-    let labels = ["person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat", "traffic light", "fire hydrant", "stop sign", "parking meter", "bench", "bird", "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe", "backpack", "umbrella", "handbag", "tie", "suitcase", "frisbee", "skis", "snowboard", "sports ball", "kite", "baseball bat", "baseball glove", "skateboard", "surfboard", "tennis racket", "bottle", "wine glass", "cup", "fork", "knife", "spoon", "bowl", "banana", "apple", "sandwich", "orange", "broccoli", "carrot", "hot dog", "pizza", "donut", "cake", "chair", "sofa", "pottedplant", "bed", "diningtable", "toilet", "tvmonitor", "laptop", "mouse", "remote", "keyboard", "cell phone", "microwave", "oven", "toaster", "sink", "refrigerator", "book", "clock", "vase", "scissors", "teddy bear", "hair drier", "toothbrush"]
+    //modificare in dictionary
+    let labels = ["person": "persona", "bicycle": "bicicletta", "car": "macchina", "motorbike": "moto", "aeroplane": "aereo", "bus": "bus", "train": "treno", "truck": "trattore", "boat": "barca", "traffic light" : "semaforo", "fire hydrant": "idrante", "stop sign" : "segnale di stop", "parking meter": "parchimetro", "bench": "panchina", "bird": "uccello", "cat": "gatto", "dog": "cane", "horse": "cavallo", "sheep": "pecora", "cow": "mucca", "elephant": "elefante", "bear": "orso", "zebra": "zebra", "giraffe": "giraffa", "backpack": "zaino", "umbrella": "ombrello", "handbag": "borsa", "tie": "cravatta", "suitcase": "valigia", "frisbee": "frisbee", "skis": "sci", "snowboard": "snowboard", "sports ball": "palla", "kite": "aquilone", "baseball bat": "mazza da baseball", "baseball glove": "guanto da baseball", "skateboard": "skateboard", "surfboard": "tavola da surf", "tennis racket": "racchetta", "bottle": "bottiglia", "wine glass": "bicchiere", "cup": "tazza", "fork": "forchetta", "knife": "coltello", "spoon": "cucchiaio", "bowl": "ciotola", "banana": "banana", "apple": "mela", "sandwich": "panino", "orange": "arancia", "broccoli": "broccoli", "carrot": "carota", "hot dog": "hot dog", "pizza": "pizza", "donut": "ciambella", "cake": "torta", "chair": "sedia", "sofa": "divano", "pottedplant": "pianta", "bed": "letto", "diningtable": "tavolo", "toilet": "water", "tvmonitor": "televisione", "laptop": "computer", "mouse": "mouse", "remote": "telecomando", "keyboard": "tastiera", "cell phone": "cellulare", "microwave": "microonde", "oven": "forno", "toaster": "tostapane", "sink": "lavandino", "refrigerator": "frigorifero", "book": "libro", "clock": "orologio", "vase":"vaso", "scissors": "forbici","teddy bear": "pupazzo", "hair drier": "phon", "toothbrush": "spazzolino"]
+    
     
 	var denied = true
     
     
     // MARK: View Controller Lifecycle
     
-    
-    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
         self.becomeFirstResponder()
-        self.textView.delegate = self
         self.textView.layer.cornerRadius = 20
         textView.clipsToBounds = false
         textView.layer.shadowColor = UIColor.systemGray2.cgColor
         textView.layer.shadowOpacity=0.4
         textView.layer.shadowOffset = CGSize(width: 3, height: 3)
-        
-        // Disable the record buttons until authorization has been granted.
-        
-       
-        label.text = "Shake device to start recording"
+
+        label.text = "Agita il dispositivo per iniziare a registrare"
     }
     
     // We are willing to become first responder to get shake motion
@@ -77,14 +63,14 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
     
     override public func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        textView.text = "I'm your assistant"
+        textView.text = "Sono il tuo assistente."
     }
     
     override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 		
-        let utterance = AVSpeechUtterance(string: "What are you searching for? " + label.text!)
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        let utterance = AVSpeechUtterance(string: "Cosa stai cercando? " + label.text!)
+        utterance.voice = AVSpeechSynthesisVoice(language: "it-IT")
         utterance.rate = 0.5
         
         let synthetizer = AVSpeechSynthesizer()
@@ -102,32 +88,33 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
             OperationQueue.main.addOperation {
                 switch authStatus {
                 case .authorized:
-                    self.label.text! = "Shake device to start recording"
+                    self.label.text! = "Agita il dispositivo per iniziare a registrare"
 					self.denied = false
                 case .denied:
-                    self.label.text! = "User denied access to speech recognition"
+                    self.label.text! = "L'utente ha negato l'accesso al riconoscimento vocale"
                 case .restricted:
-                    self.label.text! = "Speech recognition restricted on this device"
+                    self.label.text! = "Riconoscimento vocale mnegato su questo dispositivo"
 				case .notDetermined:
-                    self.label.text! = "Speech recognition restricted on this device"
+                    self.label.text! = "Riconoscimento vocale mnegato su questo dispositivo"
                 default:
-                    self.label.text! = "Speech recognition restricted on this device"
+                    self.label.text! = "Riconoscimento vocale mnegato su questo dispositivo"
                 }
             }
         }
     }
+    
 	func showAlert(){
 		// Create new Alert
-		let dialogMessage = UIAlertController(title: "Alert", message: "Please grant access to Microphone and Speech Recognition in Settings", preferredStyle: .alert)
+		let dialogMessage = UIAlertController(title: "Alert", message: "Garantire l'accesso al Microfono e al Riconoscimento Vocale nelle Impostazioni.", preferredStyle: .alert)
 		// Create OK button with action handler
-		let settingsAction = UIAlertAction(title: "Settings", style: .default) { (_) -> Void in
+		let settingsAction = UIAlertAction(title: "Impostazioni", style: .default) { (_) -> Void in
 			let settingsUrl = NSURL(string: UIApplication.openSettingsURLString)
 			if settingsUrl != nil {
 				UIApplication.shared.open(settingsUrl! as URL)
 			}
 		}
 		
-		let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+		let cancelAction = UIAlertAction(title: "Cancella", style: .default, handler: nil)
 		dialogMessage.addAction(settingsAction)
 		dialogMessage.addAction(cancelAction)
 
@@ -178,7 +165,7 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
                 self.recognitionRequest = nil
                 self.recognitionTask = nil
                 
-                self.label.text! = "Shake device to start recording"
+                self.label.text! = "Agita il dispositivo per iniziare a registrare"
             }
         }
         
@@ -192,7 +179,7 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
         try audioEngine.start()
         
         // Let the user know to start talking.
-        textView.text = "Go ahead, I'm listening"
+        textView.text = "Vai avanti, ti sto ascoltando."
     }
     
 
@@ -209,7 +196,6 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
 							
 						}
 						catch {
-							
 							print("Couldn't set Audio session category")
 						}
 					} else{
@@ -222,8 +208,6 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
 			return
 		}
         if audioEngine.isRunning {
-            
-            
             do {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord, mode: .default, options: .defaultToSpeaker)
                 try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
@@ -235,9 +219,9 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
             //            textView.text! = " "
             self.label.text! = "Stopping"
             
-            if labels.contains(textView.text.lowercased()) {
-                let utterance = AVSpeechUtterance(string: "I will search for a " + textView.text!)
-                utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+            if labels.values.contains(textView.text.lowercased()) {
+                let utterance = AVSpeechUtterance(string: "Sto cercando " + textView.text!)
+                utterance.voice = AVSpeechSynthesisVoice(language: "it-IT")
                 utterance.rate = 0.5
                 
                 let synthetizer = AVSpeechSynthesizer()
@@ -246,17 +230,17 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
                 performSegue(withIdentifier: "showSearch", sender: nil)
             }
             else{
-                if self.textView.text! == "Go ahead, I'm listening" {
-                    let utterance = AVSpeechUtterance(string: "I didn't understand, please try again")
-                    utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+                if self.textView.text! == "Vai avanti, ti sto ascoltando" {
+                    let utterance = AVSpeechUtterance(string: "Non ho capito. Riprova.")
+                    utterance.voice = AVSpeechSynthesisVoice(language: "it-IT")
                     utterance.rate = 0.5
                     
                     let synthetizer = AVSpeechSynthesizer()
                     synthetizer.speak(utterance)
                 }
                 else {
-                    let utterance = AVSpeechUtterance(string: "I cannot recognize " + textView.text! + ". Please try again")
-                    utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+                    let utterance = AVSpeechUtterance(string: "Non riesco a riconoscere " + textView.text! + ". Riprova per favore.")
+                    utterance.voice = AVSpeechSynthesisVoice(language: "it-IT")
                     utterance.rate = 0.5
                     
                     let synthetizer = AVSpeechSynthesizer()
@@ -264,15 +248,14 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
 					synthetizer.speak(utterance)
                 }
             }
-            
         } else {
             micImage.tintColor = UIColor.systemPink
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             do {
                 try startRecording()
-                self.label.text! = "Shake device to stop recording"
+                self.label.text! = "Agita il dispositivo per fermare la registrazione."
             } catch {
-                self.label.text! = "Recording not available"
+                self.label.text! = "Registrazione non disponibile."
             }
         }
     }
@@ -286,8 +269,16 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate,  UITex
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             micImage.tintColor = UIColor.systemGray2
             let dstview = segue.destination as! VisionObjectRecognitionViewController
-            dstview.object = self.textView.text
+            //dstview.object = self.textView.text
         
+            for key in labels.keys {
+                if labels[key] == self.textView.text.lowercased() {
+                    dstview.object = key
+                    break
+                }
+            }
+            
+
         default: print(#function)
         }
     }
