@@ -24,7 +24,8 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
     private let audioEngine = AVAudioEngine()
 	
 	let session = AVAudioSession.sharedInstance()
-
+    
+    
     //modificare in dictionary
     let labels = ["person": "persona", "bicycle": "bicicletta", "car": "macchina", "motorbike": "moto", "aeroplane": "aereo", "bus": "bus", "train": "treno", "truck": "trattore", "boat": "barca", "traffic light" : "semaforo", "fire hydrant": "idrante", "stop sign" : "segnale di stop", "parking meter": "parchimetro", "bench": "panchina", "bird": "uccello", "cat": "gatto", "dog": "cane", "horse": "cavallo", "sheep": "pecora", "cow": "mucca", "elephant": "elefante", "bear": "orso", "zebra": "zebra", "giraffe": "giraffa", "backpack": "zaino", "umbrella": "ombrello", "handbag": "borsa", "tie": "cravatta", "suitcase": "valigia", "frisbee": "frisbee", "skis": "sci", "snowboard": "snowboard", "sports ball": "palla", "kite": "aquilone", "baseball bat": "mazza da baseball", "baseball glove": "guanto da baseball", "skateboard": "skateboard", "surfboard": "tavola da surf", "tennis racket": "racchetta", "bottle": "bottiglia", "wine glass": "bicchiere", "cup": "tazza", "fork": "forchetta", "knife": "coltello", "spoon": "cucchiaio", "bowl": "ciotola", "banana": "banana", "apple": "mela", "sandwich": "panino", "orange": "arancia", "broccoli": "broccoli", "carrot": "carota", "hot dog": "hot dog", "pizza": "pizza", "donut": "ciambella", "cake": "torta", "chair": "sedia", "sofa": "divano", "pottedplant": "pianta", "bed": "letto", "diningtable": "tavolo", "toilet": "water", "tvmonitor": "televisione", "laptop": "computer", "mouse": "mouse", "remote": "telecomando", "keyboard": "tastiera", "cell phone": "cellulare", "microwave": "microonde", "oven": "forno", "toaster": "tostapane", "sink": "lavandino", "refrigerator": "frigorifero", "book": "libro", "clock": "orologio", "vase":"vaso", "scissors": "forbici","teddy bear": "pupazzo", "hair drier": "phon", "toothbrush": "spazzolino"]
     
@@ -45,6 +46,13 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
         textView.layer.shadowOffset = CGSize(width: 3, height: 3)
 
         label.text = "Agita il dispositivo per iniziare a registrare"
+        
+        let userDefaults = UserDefaults.standard
+        
+        if !userDefaults.bool(forKey: "alreadyOpenApp") {
+            userDefaults.setValue(true, forKey: "alreadyOpenApp")
+            print("Benvenuto!")
+        }
     }
     
     // We are willing to become first responder to get shake motion
@@ -93,11 +101,11 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
                 case .denied:
                     self.label.text! = "L'utente ha negato l'accesso al riconoscimento vocale"
                 case .restricted:
-                    self.label.text! = "Riconoscimento vocale mnegato su questo dispositivo"
+                    self.label.text! = "Riconoscimento vocale negato su questo dispositivo"
 				case .notDetermined:
-                    self.label.text! = "Riconoscimento vocale mnegato su questo dispositivo"
+                    self.label.text! = "Riconoscimento vocale negato su questo dispositivo"
                 default:
-                    self.label.text! = "Riconoscimento vocale mnegato su questo dispositivo"
+                    self.label.text! = "Riconoscimento vocale negato su questo dispositivo"
                 }
             }
         }
@@ -187,6 +195,7 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
     // MARK: Interface Builder actions
     
     func shaked() {
+        // MARK: ???
 			if (session.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
 				AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
 					if granted {
