@@ -2,7 +2,6 @@
 //  SpeakViewController.swift
 //  AFPProject-Team10.1
 //
-//  Created by antonello avella on 18/02/21.
 //
 
 import UIKit
@@ -14,7 +13,7 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
     @IBOutlet weak var micImage: UIImageView!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var textView: UITextView!
-    
+
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "it-IT"))!
     
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
@@ -29,12 +28,13 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
     //modificare in dictionary
     let labels = ["person": "persona", "bicycle": "bicicletta", "car": "macchina", "motorbike": "moto", "aeroplane": "aereo", "bus": "bus", "train": "treno", "truck": "trattore", "boat": "barca", "traffic light" : "semaforo", "fire hydrant": "idrante", "stop sign" : "segnale di stop", "parking meter": "parchimetro", "bench": "panchina", "bird": "uccello", "cat": "gatto", "dog": "cane", "horse": "cavallo", "sheep": "pecora", "cow": "mucca", "elephant": "elefante", "bear": "orso", "zebra": "zebra", "giraffe": "giraffa", "backpack": "zaino", "umbrella": "ombrello", "handbag": "borsa", "tie": "cravatta", "suitcase": "valigia", "frisbee": "frisbee", "skis": "sci", "snowboard": "snowboard", "sports ball": "palla", "kite": "aquilone", "baseball bat": "mazza da baseball", "baseball glove": "guanto da baseball", "skateboard": "skateboard", "surfboard": "tavola da surf", "tennis racket": "racchetta", "bottle": "bottiglia", "wine glass": "bicchiere", "cup": "tazza", "fork": "forchetta", "knife": "coltello", "spoon": "cucchiaio", "bowl": "ciotola", "banana": "banana", "apple": "mela", "sandwich": "panino", "orange": "arancia", "broccoli": "broccoli", "carrot": "carota", "hot dog": "hot dog", "pizza": "pizza", "donut": "ciambella", "cake": "torta", "chair": "sedia", "sofa": "divano", "pottedplant": "pianta", "bed": "letto", "diningtable": "tavolo", "toilet": "water", "tvmonitor": "televisione", "laptop": "computer", "mouse": "mouse", "remote": "telecomando", "keyboard": "tastiera", "cell phone": "cellulare", "microwave": "microonde", "oven": "forno", "toaster": "tostapane", "sink": "lavandino", "refrigerator": "frigorifero", "book": "libro", "clock": "orologio", "vase":"vaso", "scissors": "forbici","teddy bear": "pupazzo", "hair drier": "phon", "toothbrush": "spazzolino"]
     
+    let userDefaults = UserDefaults.standard
     
 	var denied = true
     
+    var firstTime = true
     
     // MARK: View Controller Lifecycle
-    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,12 +47,8 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
 
         label.text = "Agita il dispositivo per iniziare a registrare"
         
-        let userDefaults = UserDefaults.standard
+        textView.accessibilityElementsHidden = true
         
-        if !userDefaults.bool(forKey: "alreadyOpenApp") {
-            userDefaults.setValue(true, forKey: "alreadyOpenApp")
-            print("Benvenuto!")
-        }
     }
     
     // We are willing to become first responder to get shake motion
@@ -77,12 +73,9 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
     override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 		
-        let utterance = AVSpeechUtterance(string: "Cosa stai cercando? " + label.text!)
-        utterance.voice = AVSpeechSynthesisVoice(language: "it-IT")
-        utterance.rate = 0.5
-        
-        let synthetizer = AVSpeechSynthesizer()
-        synthetizer.speak(utterance)
+        if userDefaults.bool(forKey: "alreadyOpenApp") {
+            speak("Cosa stai cercando? " + label.text!)
+        }
         
         // Configure the SFSpeechRecognizer object already
         // stored in a local member variable.
@@ -90,7 +83,6 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
         
         // Asynchronously make the authorization request.
         SFSpeechRecognizer.requestAuthorization { authStatus in
-            
             // Divert to the app's main thread so that the UI
             // can be updated.
             OperationQueue.main.addOperation {
@@ -98,6 +90,10 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
                 case .authorized:
                     self.label.text! = "Agita il dispositivo per iniziare a registrare"
 					self.denied = false
+                    if !self.userDefaults.bool(forKey: "alreadyOpenApp") {
+                        self.userDefaults.setValue(true, forKey: "alreadyOpenApp")
+                        self.tutorial()
+                    }
                 case .denied:
                     self.label.text! = "L'utente ha negato l'accesso al riconoscimento vocale"
                 case .restricted:
@@ -228,33 +224,34 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
             //            textView.text! = " "
             self.label.text! = "Stopping"
             
-            if labels.values.contains(textView.text.lowercased()) {
-                let utterance = AVSpeechUtterance(string: "Sto cercando " + textView.text!)
-                utterance.voice = AVSpeechSynthesisVoice(language: "it-IT")
-                utterance.rate = 0.5
+//            Aggiungere segue per testo
+            if textView.text.lowercased() == "testo" {
+                speak("Proveró a leggere un testo.")
                 
-                let synthetizer = AVSpeechSynthesizer()
+                performSegue(withIdentifier: "readText", sender: nil)
                 
-				synthetizer.speak(utterance)
+            }
+            else if textView.text.lowercased() == "vestiti" {
+                speak("Ti aiuteró a scegliere i vestiti.")
+                
+                performSegue(withIdentifier: "recognizeClothes", sender: nil)
+            }
+            else if textView.text.lowercased() == "codice a barre" {
+                speak("Ti aiuteró a leggere un codice a barre.")
+                
+                performSegue(withIdentifier: "recognizeBarCode", sender: nil)
+            }
+            else if labels.values.contains(textView.text.lowercased()) {
+                speak("Sto cercando " + textView.text!)
+                
                 performSegue(withIdentifier: "showSearch", sender: nil)
             }
             else{
                 if self.textView.text! == "Vai avanti, ti sto ascoltando" {
-                    let utterance = AVSpeechUtterance(string: "Non ho capito. Riprova.")
-                    utterance.voice = AVSpeechSynthesisVoice(language: "it-IT")
-                    utterance.rate = 0.5
-                    
-                    let synthetizer = AVSpeechSynthesizer()
-                    synthetizer.speak(utterance)
+                    speak("Non ho capito. Riprova.")
                 }
                 else {
-                    let utterance = AVSpeechUtterance(string: "Non riesco a riconoscere " + textView.text! + ". Riprova per favore.")
-                    utterance.voice = AVSpeechSynthesisVoice(language: "it-IT")
-                    utterance.rate = 0.5
-                    
-                    let synthetizer = AVSpeechSynthesizer()
-                    
-					synthetizer.speak(utterance)
+                    speak("Non riesco a riconoscere " + textView.text! + ". Riprova per favore.")
                 }
             }
         } else {
@@ -278,7 +275,6 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             micImage.tintColor = UIColor.systemGray2
             let dstview = segue.destination as! VisionObjectRecognitionViewController
-            //dstview.object = self.textView.text
         
             for key in labels.keys {
                 if labels[key] == self.textView.text.lowercased() {
@@ -286,9 +282,23 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
                     break
                 }
             }
-            
 
         default: print(#function)
         }
     }
+    
+    func tutorial() {
+        speak("Per cercare un oggetto agita il dispositivo e pronuncia il nome dell'oggetto. Agita nuovamente per confermare. Se vuoi leggere un testo pronuncia la parola Testo")
+    }
+    
+    func speak(_ text: String) {
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: "it-IT")
+        utterance.rate = 0.5
+        
+        let synthetizer = AVSpeechSynthesizer()
+        synthetizer.speak(utterance)
+    }
+    
 }
+

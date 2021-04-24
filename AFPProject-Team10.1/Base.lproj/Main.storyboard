@@ -18,6 +18,9 @@
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JFC-4b-LaZ">
                                 <rect key="frame" x="186.5" y="813" width="41.5" height="21"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -25,6 +28,10 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9o-nZ-2cg">
                                 <rect key="frame" x="30" y="165" width="355" height="170"/>
                                 <color key="backgroundColor" systemColor="systemPinkColor"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="170" id="47g-2S-699"/>
                                 </constraints>
@@ -59,11 +66,14 @@
                         <outlet property="micImage" destination="Kiw-CM-ytN" id="knB-Or-CGH"/>
                         <outlet property="textView" destination="B9o-nZ-2cg" id="acu-xe-5W5"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="showSearch" id="CSX-ah-OXy"/>
+                        <segue destination="Ldn-Ed-p9O" kind="show" identifier="readText" id="krZ-wn-WGz"/>
+                        <segue destination="m51-x3-4di" kind="show" identifier="recognizeBarCode" id="Yce-XN-eT3"/>
+                        <segue destination="itp-jQ-v8m" kind="show" identifier="recognizeClothes" id="9O5-Jh-hFz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="roZ-yd-soq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1889.8550724637682" y="93.75"/>
+            <point key="canvasLocation" x="1890" y="94"/>
         </scene>
         <!--Ricerca-->
         <scene sceneID="tne-QT-ifu">
@@ -103,6 +113,54 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f96-AA-jRn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="979.71014492753636" y="93.75"/>
+        </scene>
+        <!--Lettura testo-->
+        <scene sceneID="Rn9-ft-kp6">
+            <objects>
+                <viewController id="Ldn-Ed-p9O" customClass="TextRecognitionViewController" customModule="AFPProject_Team10_1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nSN-bd-qOv">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="D2G-aI-tsH"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Lettura testo" id="KTt-LF-vUT"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q2e-BT-5rj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1890" y="808"/>
+        </scene>
+        <!--Codici a barre-->
+        <scene sceneID="U36-a1-Mjf">
+            <objects>
+                <viewController id="m51-x3-4di" customClass="BarCodeRecognitionViewController" customModule="AFPProject_Team10_1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dIi-ue-InB">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="pxf-IM-nZW"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Codici a barre" id="gb6-PQ-SfH"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hbH-wy-LIa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2851" y="-584"/>
+        </scene>
+        <!--Vestiti-->
+        <scene sceneID="5ic-b8-LBN">
+            <objects>
+                <viewController id="itp-jQ-v8m" customClass="ClothesRecognitionViewController" customModule="AFPProject_Team10_1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Mur-8D-SiP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="dnn-yG-QKH"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Vestiti" id="d35-Fp-eTF"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ato-7G-QDF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2851" y="808"/>
         </scene>
     </scenes>
     <color key="tintColor" systemColor="labelColor"/>

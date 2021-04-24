@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15001D7226340E1B008F4B1D /* TextRecognitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15001D7126340E1B008F4B1D /* TextRecognitionViewController.swift */; };
+		15001D752634114E008F4B1D /* BarCodeRecognitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15001D742634114E008F4B1D /* BarCodeRecognitionViewController.swift */; };
+		15001D782634122B008F4B1D /* ClothesRecognitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15001D772634122B008F4B1D /* ClothesRecognitionViewController.swift */; };
 		154ED08225DA706300B789DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154ED08125DA706300B789DD /* AppDelegate.swift */; };
 		154ED08425DA706300B789DD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154ED08325DA706300B789DD /* SceneDelegate.swift */; };
 		154ED08925DA706300B789DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 154ED08725DA706300B789DD /* Main.storyboard */; };
@@ -21,6 +24,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		15001D7126340E1B008F4B1D /* TextRecognitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionViewController.swift; sourceTree = "<group>"; };
+		15001D742634114E008F4B1D /* BarCodeRecognitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarCodeRecognitionViewController.swift; sourceTree = "<group>"; };
+		15001D772634122B008F4B1D /* ClothesRecognitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesRecognitionViewController.swift; sourceTree = "<group>"; };
 		154ED07E25DA706300B789DD /* AFPProject-Team10.1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AFPProject-Team10.1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		154ED08125DA706300B789DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		154ED08325DA706300B789DD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +84,9 @@
 				154ED08A25DA706300B789DD /* AFPProject_Team10_1.xcdatamodeld */,
 				5621FA2F25DE755900A4438B /* SpeakViewController.swift */,
 				56FEAF9825E033580084431E /* NavigationBarController.swift */,
+				15001D7126340E1B008F4B1D /* TextRecognitionViewController.swift */,
+				15001D742634114E008F4B1D /* BarCodeRecognitionViewController.swift */,
+				15001D772634122B008F4B1D /* ClothesRecognitionViewController.swift */,
 			);
 			path = "AFPProject-Team10.1";
 			sourceTree = "<group>";
@@ -152,8 +161,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15001D782634122B008F4B1D /* ClothesRecognitionViewController.swift in Sources */,
 				B94EA2B125E116F000ECC865 /* YOLOv3Int8LUT.mlmodel in Sources */,
+				15001D7226340E1B008F4B1D /* TextRecognitionViewController.swift in Sources */,
 				56FEAF9925E033580084431E /* NavigationBarController.swift in Sources */,
+				15001D752634114E008F4B1D /* BarCodeRecognitionViewController.swift in Sources */,
 				5621FA3025DE755900A4438B /* SpeakViewController.swift in Sources */,
 				568CCF2125DA84F900C1F48A /* ViewController.swift in Sources */,
 				154ED08225DA706300B789DD /* AppDelegate.swift in Sources */,
@@ -313,7 +325,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.team1.lookaround;
+				PRODUCT_BUNDLE_IDENTIFIER = com.team1.lookaroundok;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -332,7 +344,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.team1.lookaround;
+				PRODUCT_BUNDLE_IDENTIFIER = com.team1.lookaroundok;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

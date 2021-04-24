@@ -1,24 +1,18 @@
 //
-//  NavigationBarController.swift
+//  ClothesRecognitionViewController.swift
 //  AFPProject-Team10.1
 //
-//  Created by antonello avella on 19/02/21.
+//  Created by Vincenzo Di Napoli on 24/04/21.
 //
 
 import UIKit
 
-class NavigationBarController: UINavigationController {
+class ClothesRecognitionViewController: UIViewController {
 
-    @IBOutlet weak var navBar: UINavigationBar!
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navBar.layer.shadowColor = UIColor.systemGray2.cgColor
-        self.navBar.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-        self.navBar.layer.shadowRadius = 4.0
-        self.navBar.layer.shadowOpacity = 1.0
 
         // Do any additional setup after loading the view.
-        navBar.accessibilityElementsHidden = true
     }
     
 
