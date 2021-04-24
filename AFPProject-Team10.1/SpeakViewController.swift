@@ -191,23 +191,22 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
     // MARK: Interface Builder actions
     
     func shaked() {
-        // MARK: ???
-			if (session.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
-				AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
-					if granted {
-						do {
-							try  self.session.setCategory(AVAudioSession.Category.playAndRecord, mode: .default, options: .defaultToSpeaker)
-							try self.session.setActive(true, options: .notifyOthersOnDeactivation)
-							
-						}
-						catch {
-							print("Couldn't set Audio session category")
-						}
-					} else{
-						self.denied = true
-					}
-				})
-			}
+        if (session.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
+            AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
+                if granted {
+                    do {
+                        try  self.session.setCategory(AVAudioSession.Category.playAndRecord, mode: .default, options: .defaultToSpeaker)
+                        try self.session.setActive(true, options: .notifyOthersOnDeactivation)
+                        
+                    }
+                    catch {
+                        print("Couldn't set Audio session category")
+                    }
+                } else{
+                    self.denied = true
+                }
+            })
+        }
 		if denied {
 			showAlert()
 			return
@@ -224,12 +223,10 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
             //            textView.text! = " "
             self.label.text! = "Stopping"
             
-//            Aggiungere segue per testo
             if textView.text.lowercased() == "testo" {
                 speak("Proveró a leggere un testo.")
                 
                 performSegue(withIdentifier: "readText", sender: nil)
-                
             }
             else if textView.text.lowercased() == "vestiti" {
                 speak("Ti aiuteró a scegliere i vestiti.")
