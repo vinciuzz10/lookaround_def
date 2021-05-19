@@ -26,6 +26,8 @@
 	<string>Allow LookAround to access the camera to detect objects.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allow LookAround to access the microphone to detect your voice.</string>
+	<key>NSSiriUsageDescription</key>
+	<string>Allow LookAround to use Siri for helping you.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string></string>
 	<key>UIApplicationSceneManifest</key>

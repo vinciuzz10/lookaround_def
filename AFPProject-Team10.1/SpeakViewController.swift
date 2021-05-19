@@ -15,12 +15,10 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
     @IBOutlet weak var textView: UITextView!
 
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "it-IT"))!
-    
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
-    
     private var recognitionTask: SFSpeechRecognitionTask?
-    
     private let audioEngine = AVAudioEngine()
+    private let synthetizer = AVSpeechSynthesizer()
 	
 	let session = AVAudioSession.sharedInstance()
     
@@ -31,8 +29,8 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
     let userDefaults = UserDefaults.standard
     
 	var denied = true
-    
     var firstTime = true
+    var objectDetected: String?
     
     // MARK: View Controller Lifecycle
     public override func viewDidLoad() {
@@ -74,7 +72,7 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
         super.viewDidAppear(animated)
 		
         if userDefaults.bool(forKey: "alreadyOpenApp") {
-            speak("Cosa stai cercando? " + label.text!)
+            speak("Come posso aiutarti?" + label.text!)
         }
         
         // Configure the SFSpeechRecognizer object already
@@ -223,18 +221,18 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
             //            textView.text! = " "
             self.label.text! = "Stopping"
             
-            if textView.text.lowercased() == "testo" {
+            if textView.text.lowercased().contains("testo") {
                 speak("Proveró a leggere un testo.")
                 
                 performSegue(withIdentifier: "readText", sender: nil)
             }
-            else if textView.text.lowercased() == "vestiti" {
+            else if textView.text.lowercased().contains("vestiti") || textView.text.lowercased().contains("vestito") {
                 speak("Ti aiuteró a scegliere i vestiti.")
                 
                 performSegue(withIdentifier: "recognizeClothes", sender: nil)
             }
-            else if textView.text.lowercased() == "codice a barre" {
-                speak("Ti aiuteró a leggere un codice a barre.")
+            else if textView.text.lowercased().contains("codice a barre") || textView.text.lowercased().contains("barcode") {
+                speak("Ti aiuteró a identificare un codice a barre.")
                 
                 performSegue(withIdentifier: "recognizeBarCode", sender: nil)
             }
@@ -244,14 +242,29 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
                 performSegue(withIdentifier: "showSearch", sender: nil)
             }
             else{
+                var flag = 0
+                labels.values.forEach { (s) in
+                    if textView.text.contains(s) {
+                        flag = 1
+                        self.objectDetected = s
+                        speak("Sto cercando " + s)
+                        
+                        performSegue(withIdentifier: "showSearch", sender: nil)
+                        return
+                    }
+                }
+                if flag == 1 {
+                    return
+                }
                 if self.textView.text! == "Vai avanti, ti sto ascoltando" {
                     speak("Non ho capito. Riprova.")
                 }
                 else {
-                    speak("Non riesco a riconoscere " + textView.text! + ". Riprova per favore.")
+                    speak("Non riesco ad aiutarti. Riprova per favore.")
                 }
             }
         } else {
+            self.synthetizer.stopSpeaking(at: .immediate)
             micImage.tintColor = UIColor.systemPink
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
             do {
@@ -274,7 +287,7 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
             let dstview = segue.destination as! VisionObjectRecognitionViewController
         
             for key in labels.keys {
-                if labels[key] == self.textView.text.lowercased() {
+                if labels[key] == self.objectDetected {
                     dstview.object = key
                     break
                 }
@@ -285,7 +298,7 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
     }
     
     func tutorial() {
-        speak("Per cercare un oggetto agita il dispositivo e pronuncia il nome dell'oggetto. Agita nuovamente per confermare. Se vuoi leggere un testo pronuncia la parola Testo")
+        speak("Per chiedere aiuto agita il dispositivo e esponi la tua richiesta. Agita nuovamente per confermare. Puoi riconoscere oggetti, testo, vestiti e codici a barre.")
     }
     
     func speak(_ text: String) {
@@ -293,9 +306,32 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
         utterance.voice = AVSpeechSynthesisVoice(language: "it-IT")
         utterance.rate = 0.5
         
-        let synthetizer = AVSpeechSynthesizer()
-        synthetizer.speak(utterance)
+        self.synthetizer.speak(utterance)
     }
     
+    func updateTextFont() {
+        if (textView.text.isEmpty || textView.bounds.size.equalTo(CGSize.zero)) {
+            return;
+        }
+
+        let textViewSize = textView.frame.size;
+        let fixedWidth = textViewSize.width;
+        let expectSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat(MAXFLOAT)));
+
+        var expectFont = textView.font;
+        if (expectSize.height > textViewSize.height) {
+            while (textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat(MAXFLOAT))).height > textViewSize.height) {
+                expectFont = textView.font!.withSize(textView.font!.pointSize - 1)
+                textView.font = expectFont
+            }
+        }
+        else {
+            while (textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat(MAXFLOAT))).height < textViewSize.height) {
+                expectFont = textView.font;
+                textView.font = textView.font!.withSize(textView.font!.pointSize + 1)
+            }
+            textView.font = expectFont;
+        }
+    }
 }
 

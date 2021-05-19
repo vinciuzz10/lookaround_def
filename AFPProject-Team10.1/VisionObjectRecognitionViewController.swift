@@ -10,6 +10,7 @@ import AVFoundation
 import Vision
 
 class VisionObjectRecognitionViewController: ViewController {
+    
     var object: String!
     
     private var detectionOverlay: CALayer! = nil

@@ -25,9 +25,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9o-nZ-2cg">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" adjustsFontForContentSizeCategory="YES" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9o-nZ-2cg">
                                 <rect key="frame" x="30" y="165" width="355" height="170"/>
-                                <color key="backgroundColor" systemColor="systemPinkColor"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" notEnabled="YES"/>
                                     <bool key="isElement" value="NO"/>
@@ -114,6 +113,49 @@
             </objects>
             <point key="canvasLocation" x="929" y="94"/>
         </scene>
+        <!--Text Recognized View Controller-->
+        <scene sceneID="U9l-af-n3m">
+            <objects>
+                <viewController id="ZxF-kT-BWE" customClass="TextRecognizedViewController" customModule="AFPProject_Team10_1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8uy-50-8zx">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="121" translatesAutoresizingMaskIntoConstraints="NO" id="pxZ-hv-y7f">
+                                <rect key="frame" x="10" y="138" width="394" height="674"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BTq-uz-1va">
+                                        <rect key="frame" x="0.0" y="0.0" width="394" height="276.5"/>
+                                    </imageView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LoW-99-LFt">
+                                        <rect key="frame" x="0.0" y="397.5" width="394" height="276.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="lAL-RO-NYb"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="lAL-RO-NYb" firstAttribute="trailing" secondItem="pxZ-hv-y7f" secondAttribute="trailing" constant="10" id="AjW-ol-wj3"/>
+                            <constraint firstItem="pxZ-hv-y7f" firstAttribute="leading" secondItem="lAL-RO-NYb" secondAttribute="leading" constant="10" id="I0W-Ll-fy2"/>
+                            <constraint firstItem="pxZ-hv-y7f" firstAttribute="top" secondItem="lAL-RO-NYb" secondAttribute="top" constant="50" id="WDV-x3-WcJ"/>
+                            <constraint firstItem="lAL-RO-NYb" firstAttribute="bottom" secondItem="pxZ-hv-y7f" secondAttribute="bottom" constant="50" id="lnZ-DD-ZPf"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="hOA-d0-fCS"/>
+                    <connections>
+                        <outlet property="imageView" destination="BTq-uz-1va" id="Rh0-Ae-7LO"/>
+                        <outlet property="textView" destination="LoW-99-LFt" id="e80-qx-IUc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jnz-gr-dMO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1890" y="1506"/>
+        </scene>
         <!--Lettura testo-->
         <scene sceneID="Rn9-ft-kp6">
             <objects>
@@ -125,6 +167,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Lettura testo" id="KTt-LF-vUT"/>
+                    <connections>
+                        <segue destination="ZxF-kT-BWE" kind="show" identifier="showDocDetected" id="Ww4-NT-TE1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q2e-BT-5rj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -180,9 +225,6 @@
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

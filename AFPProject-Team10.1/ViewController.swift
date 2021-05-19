@@ -24,6 +24,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     override func viewDidLoad() {
+        
         self.dispatchWorkItem = DispatchWorkItem(block: {
             while self.dispatchWorkItem?.isCancelled == false {
                 Timer.scheduledTimer(withTimeInterval: TimeInterval(self.myTimer), repeats: false) { _ in
@@ -165,5 +166,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         dismiss(animated: true, completion: nil)
 		session.stopRunning()
     }
+    
     
 }
