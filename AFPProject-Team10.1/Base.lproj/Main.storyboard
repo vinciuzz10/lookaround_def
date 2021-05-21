@@ -186,10 +186,29 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" title="Codici a barre" id="gb6-PQ-SfH"/>
+                    <connections>
+                        <segue destination="2h7-kG-7SD" kind="show" identifier="showBarCodeResult" id="VKV-WF-f5D"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hbH-wy-LIa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2851" y="-584"/>
+        </scene>
+        <!--Bar Code Result View Controller-->
+        <scene sceneID="nPR-g2-VWD">
+            <objects>
+                <viewController id="2h7-kG-7SD" customClass="BarCodeResultViewController" customModule="AFPProject_Team10_1" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xtz-lX-o5a">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="eFY-n8-Qlu"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="3re-oT-jXz"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tUM-Wv-Ywp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3807" y="-585"/>
         </scene>
         <!--Vestiti-->
         <scene sceneID="5ic-b8-LBN">

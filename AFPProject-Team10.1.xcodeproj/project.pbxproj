@@ -17,6 +17,7 @@
 		154ED08E25DA706400B789DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 154ED08D25DA706400B789DD /* Assets.xcassets */; };
 		154ED09125DA706400B789DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 154ED08F25DA706400B789DD /* LaunchScreen.storyboard */; };
 		1576693D2649AA680081F070 /* TextRecognizedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1576693C2649AA680081F070 /* TextRecognizedViewController.swift */; };
+		15D9A4472657C35B00ADBDE2 /* BarCodeResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D9A4462657C35B00ADBDE2 /* BarCodeResultViewController.swift */; };
 		5621FA3025DE755900A4438B /* SpeakViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5621FA2F25DE755900A4438B /* SpeakViewController.swift */; };
 		568CCF1B25DA825000C1F48A /* VisionObjectRecognitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568CCF1A25DA825000C1F48A /* VisionObjectRecognitionViewController.swift */; };
 		568CCF2125DA84F900C1F48A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568CCF2025DA84F800C1F48A /* ViewController.swift */; };
@@ -51,6 +52,7 @@
 		154ED09225DA706400B789DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1576693C2649AA680081F070 /* TextRecognizedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizedViewController.swift; sourceTree = "<group>"; };
 		15B9188D264176A100F3F50B /* AFPProject-Team10.1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AFPProject-Team10.1.entitlements"; sourceTree = "<group>"; };
+		15D9A4462657C35B00ADBDE2 /* BarCodeResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarCodeResultViewController.swift; sourceTree = "<group>"; };
 		5621FA2F25DE755900A4438B /* SpeakViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakViewController.swift; sourceTree = "<group>"; };
 		568CCF1A25DA825000C1F48A /* VisionObjectRecognitionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisionObjectRecognitionViewController.swift; sourceTree = "<group>"; };
 		568CCF2025DA84F800C1F48A /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				154ED08325DA706300B789DD /* SceneDelegate.swift */,
 				B94EA2B025E116F000ECC865 /* YOLOv3Int8LUT.mlmodel */,
 				154ED08725DA706300B789DD /* Main.storyboard */,
+				15D9A4462657C35B00ADBDE2 /* BarCodeResultViewController.swift */,
 				1576693C2649AA680081F070 /* TextRecognizedViewController.swift */,
 				154ED08D25DA706400B789DD /* Assets.xcassets */,
 				154ED08F25DA706400B789DD /* LaunchScreen.storyboard */,
@@ -189,6 +192,7 @@
 				5621FA3025DE755900A4438B /* SpeakViewController.swift in Sources */,
 				568CCF2125DA84F900C1F48A /* ViewController.swift in Sources */,
 				154ED08225DA706300B789DD /* AppDelegate.swift in Sources */,
+				15D9A4472657C35B00ADBDE2 /* BarCodeResultViewController.swift in Sources */,
 				154ED08C25DA706300B789DD /* AFPProject_Team10_1.xcdatamodeld in Sources */,
 				154ED08425DA706300B789DD /* SceneDelegate.swift in Sources */,
 				568CCF1B25DA825000C1F48A /* VisionObjectRecognitionViewController.swift in Sources */,

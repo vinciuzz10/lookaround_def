@@ -275,27 +275,6 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
             }
         }
     }
-	
-
-    // MARK: Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier {
-        
-        case  "showSearch":
-            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-            micImage.tintColor = UIColor.systemGray2
-            let dstview = segue.destination as! VisionObjectRecognitionViewController
-        
-            for key in labels.keys {
-                if labels[key] == self.objectDetected {
-                    dstview.object = key
-                    break
-                }
-            }
-
-        default: print(#function)
-        }
-    }
     
     func tutorial() {
         speak("Per chiedere aiuto agita il dispositivo e esponi la tua richiesta. Agita nuovamente per confermare. Puoi riconoscere oggetti, testo, vestiti e codici a barre.")
@@ -331,6 +310,26 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
                 textView.font = textView.font!.withSize(textView.font!.pointSize + 1)
             }
             textView.font = expectFont;
+        }
+    }
+    
+    // MARK: Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        
+        case "showSearch":
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            micImage.tintColor = UIColor.systemGray2
+            let dstview = segue.destination as! VisionObjectRecognitionViewController
+        
+            for key in labels.keys {
+                if labels[key] == self.objectDetected {
+                    dstview.object = key
+                    break
+                }
+            }
+
+        default: print(#function)
         }
     }
 }
