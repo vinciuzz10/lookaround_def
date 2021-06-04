@@ -18,7 +18,7 @@ class NavigationBarController: UINavigationController {
         self.navBar.layer.shadowOpacity = 1.0
 
         // Do any additional setup after loading the view.
-        navBar.accessibilityElementsHidden = true
+//        navBar.accessibilityElementsHidden = true
     }
     
 

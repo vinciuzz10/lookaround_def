@@ -236,15 +236,10 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
                 
                 performSegue(withIdentifier: "recognizeBarCode", sender: nil)
             }
-            else if labels.values.contains(textView.text.lowercased()) {
-                speak("Sto cercando " + textView.text!)
-                
-                performSegue(withIdentifier: "showSearch", sender: nil)
-            }
             else{
                 var flag = 0
                 labels.values.forEach { (s) in
-                    if textView.text.contains(s) {
+                    if textView.text.lowercased().contains(s) {
                         flag = 1
                         self.objectDetected = s
                         speak("Sto cercando " + s)
@@ -315,11 +310,12 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
     
     // MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        micImage.tintColor = UIColor.systemGray2
+        
         switch segue.identifier {
         
         case "showSearch":
             AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-            micImage.tintColor = UIColor.systemGray2
             let dstview = segue.destination as! VisionObjectRecognitionViewController
         
             for key in labels.keys {

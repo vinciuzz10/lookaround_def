@@ -6,15 +6,25 @@
 //
 
 import UIKit
+import AVFoundation
 
 class BarCodeResultViewController: UIViewController {
     
     var url: URL?
+    var item: Product?
+    
+    @IBOutlet weak var productNameLabel: UILabel!
+    @IBOutlet weak var productImage: UIImageView!
+    
+    private let synthetizer = AVSpeechSynthesizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        BarCodeRecognitionViewController.barCodeFlag = 1
+        self.productNameLabel.adjustsFontSizeToFitWidth = true
 
-        // Do any additional setup after loading the view.
+//         Do any additional setup after loading the view.
         URLSession.shared.dataTask(with: self.url!) { (data: Data?, response: URLResponse?, error: Error?) in
             if let error = error {
                 // Handle Error
@@ -32,15 +42,75 @@ class BarCodeResultViewController: UIViewController {
                 return
             }
             // Handle Decode Data into Model
-            let item: Product = try! JSONDecoder().decode(Product.self, from: data)
-            print(item.code + "\n" + item.product.product_name_it + "+\n" + item.product.generic_name)
-            print(item.product.ingredients_text_it + "\n" + item.product.ingredients_text_en)
-        }.resume()
+//            do {
+                self.item = try? JSONDecoder().decode(Product.self, from: data)
+                
+            
+                DispatchQueue.main.sync {
+                    
+                    if let productNameIt = self.item?.product.product_name_it {
+                        self.productNameLabel.text = productNameIt
+                    }
+                    else if let productName = self.item?.product.product_name{
+                        self.productNameLabel.text = productName
+                    }
+                    else if let genericName = self.item?.product.generic_name{
+                        self.productNameLabel.text = genericName
+                    }
+                    else {
+                        self.productNameLabel.text = "Prodotto Non Trovato"
+                        self.speak(self.productNameLabel.text! + ". Riprova.")
+                        return
+                    }
+                    
+                    if let imageUrl = self.item?.product.image_url {
+                        self.productImage.load(url: URL.init(string: imageUrl)!)
+                    }
 
+                    if let ingredients = self.item?.product.ingredients_text_it {
+                        self.speak(self.productNameLabel.text! + ". Agita per conoscere gli ingredienti")
+                    }
+                    else {
+                        self.speak(self.productNameLabel.text!)
+                    }
+                    
+                }
+//            } catch {
+//                print(error)
+//                DispatchQueue.main.sync {
+//                    self.productNameLabel.text = "Prodotto non trovato."
+//                    self.speak(self.productNameLabel.text! + ". Riprova.")
+//                }
+//                return
+//            }
+            
+        }.resume()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.synthetizer.stopSpeaking(at: .immediate)
+    }
+    
+    func speak(_ text: String) {
+        
+        let utterance = AVSpeechUtterance(string: text)
+        utterance.voice = AVSpeechSynthesisVoice(language: "it-IT")
+        utterance.rate = 0.5
+        
+        self.synthetizer.speak(utterance)
+    }
 
-
+    public override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            if let ingredients = self.item?.product.ingredients_text_it {
+                AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+                speak(ingredients)
+            }
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -60,8 +130,23 @@ struct Product: Codable {
 }
 
 struct Properties: Codable {
-    let generic_name: String
     let product_name_it: String
     let ingredients_text_it: String
-    let ingredients_text_en: String
+    let image_url: String
+    let generic_name: String
+    let product_name: String
+}
+
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
 }

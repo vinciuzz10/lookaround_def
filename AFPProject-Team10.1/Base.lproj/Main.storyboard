@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Riconoscimento-->
+        <!--Speak View Controller-->
         <scene sceneID="CWm-Ib-r5t">
             <objects>
                 <viewController id="mjR-Dv-X1u" customClass="SpeakViewController" customModule="AFPProject_Team10_1" customModuleProvider="target" sceneMemberID="viewController">
@@ -59,7 +59,7 @@
                             <constraint firstItem="EUv-Zg-E5h" firstAttribute="trailing" secondItem="B9o-nZ-2cg" secondAttribute="trailing" constant="29" id="sur-0O-Lgs"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Riconoscimento" id="Ju2-IS-WHv"/>
+                    <navigationItem key="navigationItem" id="Ju2-IS-WHv"/>
                     <connections>
                         <outlet property="label" destination="JFC-4b-LaZ" id="02C-cT-hHh"/>
                         <outlet property="micImage" destination="Kiw-CM-ytN" id="knB-Or-CGH"/>
@@ -74,7 +74,7 @@
             </objects>
             <point key="canvasLocation" x="1890" y="94"/>
         </scene>
-        <!--Ricerca-->
+        <!--Vision Object Recognition View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="VisionObjectRecognitionViewController" customModule="AFPProject_Team10_1" customModuleProvider="target" sceneMemberID="viewController">
@@ -84,7 +84,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Ricerca" id="53e-zQ-lEJ"/>
+                    <navigationItem key="navigationItem" id="53e-zQ-lEJ"/>
                     <connections>
                         <outlet property="previewView" destination="8bC-Xf-vdC" id="LdJ-IO-0an"/>
                     </connections>
@@ -156,7 +156,7 @@
             </objects>
             <point key="canvasLocation" x="1890" y="1506"/>
         </scene>
-        <!--Lettura testo-->
+        <!--Text Recognition View Controller-->
         <scene sceneID="Rn9-ft-kp6">
             <objects>
                 <viewController id="Ldn-Ed-p9O" customClass="TextRecognitionViewController" customModule="AFPProject_Team10_1" customModuleProvider="target" sceneMemberID="viewController">
@@ -166,7 +166,7 @@
                         <viewLayoutGuide key="safeArea" id="D2G-aI-tsH"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Lettura testo" id="KTt-LF-vUT"/>
+                    <navigationItem key="navigationItem" id="KTt-LF-vUT"/>
                     <connections>
                         <segue destination="ZxF-kT-BWE" kind="show" identifier="showDocDetected" id="Ww4-NT-TE1"/>
                     </connections>
@@ -175,7 +175,7 @@
             </objects>
             <point key="canvasLocation" x="1890" y="808"/>
         </scene>
-        <!--Codici a barre-->
+        <!--Bar Code Recognition View Controller-->
         <scene sceneID="U36-a1-Mjf">
             <objects>
                 <viewController id="m51-x3-4di" customClass="BarCodeRecognitionViewController" customModule="AFPProject_Team10_1" customModuleProvider="target" sceneMemberID="viewController">
@@ -185,7 +185,7 @@
                         <viewLayoutGuide key="safeArea" id="pxf-IM-nZW"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Codici a barre" id="gb6-PQ-SfH"/>
+                    <navigationItem key="navigationItem" id="gb6-PQ-SfH"/>
                     <connections>
                         <segue destination="2h7-kG-7SD" kind="show" identifier="showBarCodeResult" id="VKV-WF-f5D"/>
                     </connections>
@@ -201,16 +201,47 @@
                     <view key="view" contentMode="scaleToFill" id="xtz-lX-o5a">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UZh-Xw-y7z">
+                                <rect key="frame" x="20" y="134" width="374" height="147"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="147" id="BIm-ab-dI1"/>
+                                    <constraint firstAttribute="width" constant="374" id="sL0-ut-MFp"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ihJ-XS-hc2">
+                                <rect key="frame" x="20" y="302" width="374" height="351"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="374" id="Cnc-lV-zo0"/>
+                                    <constraint firstAttribute="height" constant="351" id="qdA-Aa-bqz"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="eFY-n8-Qlu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="eFY-n8-Qlu" firstAttribute="bottom" secondItem="ihJ-XS-hc2" secondAttribute="bottom" constant="209" id="Jxk-qh-vmx"/>
+                            <constraint firstItem="eFY-n8-Qlu" firstAttribute="trailing" secondItem="UZh-Xw-y7z" secondAttribute="trailing" constant="20" id="Ntd-JP-kBl"/>
+                            <constraint firstItem="ihJ-XS-hc2" firstAttribute="leading" secondItem="eFY-n8-Qlu" secondAttribute="leading" constant="20" id="Qgq-LL-erN"/>
+                            <constraint firstItem="UZh-Xw-y7z" firstAttribute="leading" secondItem="eFY-n8-Qlu" secondAttribute="leading" constant="20" id="VlY-SQ-l20"/>
+                            <constraint firstItem="eFY-n8-Qlu" firstAttribute="trailing" secondItem="ihJ-XS-hc2" secondAttribute="trailing" constant="20" id="xUU-KP-Xx0"/>
+                            <constraint firstItem="UZh-Xw-y7z" firstAttribute="top" secondItem="eFY-n8-Qlu" secondAttribute="top" constant="46" id="xdW-2t-st3"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3re-oT-jXz"/>
+                    <connections>
+                        <outlet property="productImage" destination="ihJ-XS-hc2" id="gVX-DT-N1L"/>
+                        <outlet property="productNameLabel" destination="UZh-Xw-y7z" id="bgT-2M-Ius"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tUM-Wv-Ywp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3807" y="-585"/>
+            <point key="canvasLocation" x="3805.7971014492755" y="-585.26785714285711"/>
         </scene>
-        <!--Vestiti-->
+        <!--Clothes Recognition View Controller-->
         <scene sceneID="5ic-b8-LBN">
             <objects>
                 <viewController id="itp-jQ-v8m" customClass="ClothesRecognitionViewController" customModule="AFPProject_Team10_1" customModuleProvider="target" sceneMemberID="viewController">
@@ -220,7 +251,7 @@
                         <viewLayoutGuide key="safeArea" id="dnn-yG-QKH"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Vestiti" id="d35-Fp-eTF"/>
+                    <navigationItem key="navigationItem" id="d35-Fp-eTF"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ato-7G-QDF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

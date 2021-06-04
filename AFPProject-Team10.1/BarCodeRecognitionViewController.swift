@@ -127,8 +127,11 @@ class BarCodeRecognitionViewController: UIViewController, AVCaptureMetadataOutpu
 
     private var captureSession: AVCaptureSession?
 
+    private var item: Product?
     private var scanner: Scanner?
     private var url: URL?
+    
+    static var barCodeFlag = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,10 +144,17 @@ class BarCodeRecognitionViewController: UIViewController, AVCaptureMetadataOutpu
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if BarCodeRecognitionViewController.barCodeFlag == 1 {
+            self.navigationController?.popViewController(animated: true)
+        }
+        BarCodeRecognitionViewController.barCodeFlag = 0
+    }
+    
     func handleCode(code: String) {
-//        self.url = URL(string: "https://world.openfoodfacts.org/api/v0/product/" + code + ".json")!
-        self.url = URL(string: "https://world.openfoodfacts.org/api/v0/product/8076809536721.json")!
-        
+        self.url = URL(string: "https://world.openfoodfacts.org/api/v0/product/" + code + ".json")!
+//        self.url = URL(string: "https://world.openfoodfacts.org/api/v0/product/8076809536721.json")!
+       
         performSegue(withIdentifier: "showBarCodeResult", sender: nil)
     }
 
