@@ -50,13 +50,12 @@ class TextRecognizedViewController: UIViewController {
                     print("No Candidate")
                     continue
                 }
-                text += "\n\(topCandidate.string)"
+                text += "\(topCandidate.string) "
                 
                 DispatchQueue.main.async {
                     self.textView.text = text
                 }
             }
-            
             self.speak(text)
         })
         

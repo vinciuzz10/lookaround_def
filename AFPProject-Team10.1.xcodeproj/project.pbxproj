@@ -10,6 +10,7 @@
 		15001D7226340E1B008F4B1D /* TextRecognitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15001D7126340E1B008F4B1D /* TextRecognitionViewController.swift */; };
 		15001D752634114E008F4B1D /* BarCodeRecognitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15001D742634114E008F4B1D /* BarCodeRecognitionViewController.swift */; };
 		15001D782634122B008F4B1D /* ClothesRecognitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15001D772634122B008F4B1D /* ClothesRecognitionViewController.swift */; };
+		153BF2E3266F5BE800515114 /* ClothesClassifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 153BF2E2266F5BE800515114 /* ClothesClassifier.mlmodel */; };
 		154ED08225DA706300B789DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154ED08125DA706300B789DD /* AppDelegate.swift */; };
 		154ED08425DA706300B789DD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154ED08325DA706300B789DD /* SceneDelegate.swift */; };
 		154ED08925DA706300B789DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 154ED08725DA706300B789DD /* Main.storyboard */; };
@@ -17,6 +18,8 @@
 		154ED08E25DA706400B789DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 154ED08D25DA706400B789DD /* Assets.xcassets */; };
 		154ED09125DA706400B789DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 154ED08F25DA706400B789DD /* LaunchScreen.storyboard */; };
 		1576693D2649AA680081F070 /* TextRecognizedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1576693C2649AA680081F070 /* TextRecognizedViewController.swift */; };
+		1594D48C2671FFC900A29D51 /* ClothesClassifier-2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 1594D48B2671FFC900A29D51 /* ClothesClassifier-2.mlmodel */; };
+		1594D48F2672040500A29D51 /* ClothesClassifier-3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 1594D48E2672040500A29D51 /* ClothesClassifier-3.mlmodel */; };
 		15D9A4472657C35B00ADBDE2 /* BarCodeResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15D9A4462657C35B00ADBDE2 /* BarCodeResultViewController.swift */; };
 		5621FA3025DE755900A4438B /* SpeakViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5621FA2F25DE755900A4438B /* SpeakViewController.swift */; };
 		568CCF1B25DA825000C1F48A /* VisionObjectRecognitionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 568CCF1A25DA825000C1F48A /* VisionObjectRecognitionViewController.swift */; };
@@ -42,6 +45,7 @@
 		15001D7126340E1B008F4B1D /* TextRecognitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognitionViewController.swift; sourceTree = "<group>"; };
 		15001D742634114E008F4B1D /* BarCodeRecognitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarCodeRecognitionViewController.swift; sourceTree = "<group>"; };
 		15001D772634122B008F4B1D /* ClothesRecognitionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothesRecognitionViewController.swift; sourceTree = "<group>"; };
+		153BF2E2266F5BE800515114 /* ClothesClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ClothesClassifier.mlmodel; sourceTree = "<group>"; };
 		154ED07E25DA706300B789DD /* AFPProject-Team10.1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AFPProject-Team10.1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		154ED08125DA706300B789DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		154ED08325DA706300B789DD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +55,8 @@
 		154ED09025DA706400B789DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		154ED09225DA706400B789DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1576693C2649AA680081F070 /* TextRecognizedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextRecognizedViewController.swift; sourceTree = "<group>"; };
+		1594D48B2671FFC900A29D51 /* ClothesClassifier-2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "ClothesClassifier-2.mlmodel"; sourceTree = "<group>"; };
+		1594D48E2672040500A29D51 /* ClothesClassifier-3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = "ClothesClassifier-3.mlmodel"; sourceTree = "<group>"; };
 		15B9188D264176A100F3F50B /* AFPProject-Team10.1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AFPProject-Team10.1.entitlements"; sourceTree = "<group>"; };
 		15D9A4462657C35B00ADBDE2 /* BarCodeResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarCodeResultViewController.swift; sourceTree = "<group>"; };
 		5621FA2F25DE755900A4438B /* SpeakViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +77,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		153BF2E6266F5DDA00515114 /* MLModel */ = {
+			isa = PBXGroup;
+			children = (
+				1594D48E2672040500A29D51 /* ClothesClassifier-3.mlmodel */,
+				1594D48B2671FFC900A29D51 /* ClothesClassifier-2.mlmodel */,
+				153BF2E2266F5BE800515114 /* ClothesClassifier.mlmodel */,
+				B94EA2B025E116F000ECC865 /* YOLOv3Int8LUT.mlmodel */,
+			);
+			path = MLModel;
+			sourceTree = "<group>";
+		};
 		154ED07525DA706300B789DD = {
 			isa = PBXGroup;
 			children = (
@@ -90,24 +107,24 @@
 		154ED08025DA706300B789DD /* AFPProject-Team10.1 */ = {
 			isa = PBXGroup;
 			children = (
-				15B9188D264176A100F3F50B /* AFPProject-Team10.1.entitlements */,
-				154ED08125DA706300B789DD /* AppDelegate.swift */,
 				568CCF1A25DA825000C1F48A /* VisionObjectRecognitionViewController.swift */,
 				568CCF2025DA84F800C1F48A /* ViewController.swift */,
-				154ED08325DA706300B789DD /* SceneDelegate.swift */,
-				B94EA2B025E116F000ECC865 /* YOLOv3Int8LUT.mlmodel */,
-				154ED08725DA706300B789DD /* Main.storyboard */,
 				15D9A4462657C35B00ADBDE2 /* BarCodeResultViewController.swift */,
 				1576693C2649AA680081F070 /* TextRecognizedViewController.swift */,
+				5621FA2F25DE755900A4438B /* SpeakViewController.swift */,
+				56FEAF9825E033580084431E /* NavigationBarController.swift */,
+				15001D7126340E1B008F4B1D /* TextRecognitionViewController.swift */,
+				15001D772634122B008F4B1D /* ClothesRecognitionViewController.swift */,
+				15001D742634114E008F4B1D /* BarCodeRecognitionViewController.swift */,
+				153BF2E6266F5DDA00515114 /* MLModel */,
+				15B9188D264176A100F3F50B /* AFPProject-Team10.1.entitlements */,
+				154ED08125DA706300B789DD /* AppDelegate.swift */,
+				154ED08325DA706300B789DD /* SceneDelegate.swift */,
+				154ED08725DA706300B789DD /* Main.storyboard */,
 				154ED08D25DA706400B789DD /* Assets.xcassets */,
 				154ED08F25DA706400B789DD /* LaunchScreen.storyboard */,
 				154ED09225DA706400B789DD /* Info.plist */,
 				154ED08A25DA706300B789DD /* AFPProject_Team10_1.xcdatamodeld */,
-				5621FA2F25DE755900A4438B /* SpeakViewController.swift */,
-				56FEAF9825E033580084431E /* NavigationBarController.swift */,
-				15001D7126340E1B008F4B1D /* TextRecognitionViewController.swift */,
-				15001D742634114E008F4B1D /* BarCodeRecognitionViewController.swift */,
-				15001D772634122B008F4B1D /* ClothesRecognitionViewController.swift */,
 			);
 			path = "AFPProject-Team10.1";
 			sourceTree = "<group>";
@@ -183,6 +200,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				153BF2E3266F5BE800515114 /* ClothesClassifier.mlmodel in Sources */,
 				15001D782634122B008F4B1D /* ClothesRecognitionViewController.swift in Sources */,
 				B94EA2B125E116F000ECC865 /* YOLOv3Int8LUT.mlmodel in Sources */,
 				15001D7226340E1B008F4B1D /* TextRecognitionViewController.swift in Sources */,
@@ -191,6 +209,8 @@
 				15001D752634114E008F4B1D /* BarCodeRecognitionViewController.swift in Sources */,
 				5621FA3025DE755900A4438B /* SpeakViewController.swift in Sources */,
 				568CCF2125DA84F900C1F48A /* ViewController.swift in Sources */,
+				1594D48C2671FFC900A29D51 /* ClothesClassifier-2.mlmodel in Sources */,
+				1594D48F2672040500A29D51 /* ClothesClassifier-3.mlmodel in Sources */,
 				154ED08225DA706300B789DD /* AppDelegate.swift in Sources */,
 				15D9A4472657C35B00ADBDE2 /* BarCodeResultViewController.swift in Sources */,
 				154ED08C25DA706300B789DD /* AFPProject_Team10_1.xcdatamodeld in Sources */,

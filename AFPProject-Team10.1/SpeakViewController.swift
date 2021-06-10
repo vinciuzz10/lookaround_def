@@ -19,12 +19,13 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
     private let synthetizer = AVSpeechSynthesizer()
+    private var timer: Timer?
 	
 	let session = AVAudioSession.sharedInstance()
     
     
     //modificare in dictionary
-    let labels = ["person": "persona", "bicycle": "bicicletta", "car": "macchina", "motorbike": "moto", "aeroplane": "aereo", "bus": "bus", "train": "treno", "truck": "trattore", "boat": "barca", "traffic light" : "semaforo", "fire hydrant": "idrante", "stop sign" : "segnale di stop", "parking meter": "parchimetro", "bench": "panchina", "bird": "uccello", "cat": "gatto", "dog": "cane", "horse": "cavallo", "sheep": "pecora", "cow": "mucca", "elephant": "elefante", "bear": "orso", "zebra": "zebra", "giraffe": "giraffa", "backpack": "zaino", "umbrella": "ombrello", "handbag": "borsa", "tie": "cravatta", "suitcase": "valigia", "frisbee": "frisbee", "skis": "sci", "snowboard": "snowboard", "sports ball": "palla", "kite": "aquilone", "baseball bat": "mazza da baseball", "baseball glove": "guanto da baseball", "skateboard": "skateboard", "surfboard": "tavola da surf", "tennis racket": "racchetta", "bottle": "bottiglia", "wine glass": "bicchiere", "cup": "tazza", "fork": "forchetta", "knife": "coltello", "spoon": "cucchiaio", "bowl": "ciotola", "banana": "banana", "apple": "mela", "sandwich": "panino", "orange": "arancia", "broccoli": "broccoli", "carrot": "carota", "hot dog": "hot dog", "pizza": "pizza", "donut": "ciambella", "cake": "torta", "chair": "sedia", "sofa": "divano", "pottedplant": "pianta", "bed": "letto", "diningtable": "tavolo", "toilet": "water", "tvmonitor": "televisione", "laptop": "computer", "mouse": "mouse", "remote": "telecomando", "keyboard": "tastiera", "cell phone": "cellulare", "microwave": "microonde", "oven": "forno", "toaster": "tostapane", "sink": "lavandino", "refrigerator": "frigorifero", "book": "libro", "clock": "orologio", "vase":"vaso", "scissors": "forbici","teddy bear": "pupazzo", "hair drier": "phon", "toothbrush": "spazzolino"]
+    let labels = ["person": "persona", "bicycle": "bicicletta", "car": "macchina", "motorbike": "moto", "aeroplane": "aereo", "bus": "bus", "train": "treno", "truck": "trattore", "boat": "barca", "traffic light" : "semaforo", "fire hydrant": "idrante", "stop sign" : "stop", "parking meter": "parchimetro", "bench": "panchina", "bird": "uccello", "cat": "gatto", "dog": "cane", "horse": "cavallo", "sheep": "pecora", "cow": "mucca", "elephant": "elefante", "bear": "orso", "zebra": "zebra", "giraffe": "giraffa", "backpack": "zaino", "umbrella": "ombrello", "handbag": "borsa", "tie": "cravatta", "suitcase": "valigia", "frisbee": "frisbee", "skis": "sci", "snowboard": "snowboard", "sports ball": "palla", "kite": "aquilone", "skateboard": "skateboard", "surfboard": "tavola da surf", "tennis racket": "racchetta", "bottle": "bottiglia", "wine glass": "bicchiere", "cup": "tazza", "fork": "forchetta", "knife": "coltello", "spoon": "cucchiaio", "bowl": "ciotola", "banana": "banana", "apple": "mela", "sandwich": "panino", "orange": "arancia", "broccoli": "broccoli", "carrot": "carota", "hot dog": "hot dog", "pizza": "pizza", "donut": "ciambella", "cake": "torta", "chair": "sedia", "sofa": "divano", "pottedplant": "pianta", "bed": "letto", "diningtable": "tavolo", "toilet": "water", "tvmonitor": "televisione", "laptop": "computer", "mouse": "mouse", "remote": "telecomando", "keyboard": "tastiera", "cell phone": "cellulare", "microwave": "microonde", "oven": "forno", "toaster": "tostapane", "sink": "lavandino", "refrigerator": "frigorifero", "book": "libro", "clock": "orologio", "vase":"vaso", "scissors": "forbici","teddy bear": "pupazzo", "hair drier": "asciugacapelli", "toothbrush": "spazzolino"]
     
     let userDefaults = UserDefaults.standard
     
@@ -158,7 +159,6 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
                 isFinal = result.isFinal
             }
             
-            
             if error != nil || isFinal {
                 // Stop recognizing speech if there is a problem.
                 self.audioEngine.stop()
@@ -169,6 +169,10 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
                 
                 self.label.text! = "Agita il dispositivo per iniziare a registrare"
             }
+            else if error == nil {
+                self.restartSpeechTimer()
+            }
+
         }
         
         // Configure the microphone input.
@@ -184,7 +188,14 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
         textView.text = "Vai avanti, ti sto ascoltando."
     }
     
-
+    func restartSpeechTimer() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false, block: { (timer) in
+            // Do whatever needs to be done when the timer expires
+            self.manageSpeechResult()
+            print("Timer scaduto")
+        })
+    }
     
     // MARK: Interface Builder actions
     
@@ -210,6 +221,22 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
 			return
 		}
         if audioEngine.isRunning {
+            self.manageSpeechResult()
+        } else {
+            self.synthetizer.stopSpeaking(at: .immediate)
+            micImage.tintColor = UIColor.systemPink
+            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+            do {
+                try startRecording()
+                self.label.text! = "Agita il dispositivo per fermare la registrazione."
+            } catch {
+                self.label.text! = "Registrazione non disponibile."
+            }
+        }
+    }
+    
+    func manageSpeechResult() {
+        if audioEngine.isRunning {
             do {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playAndRecord, mode: .default, options: .defaultToSpeaker)
                 try AVAudioSession.sharedInstance().setActive(true, options: .notifyOthersOnDeactivation)
@@ -221,17 +248,20 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
             //            textView.text! = " "
             self.label.text! = "Stopping"
             
-            if textView.text.lowercased().contains("testo") {
+            let wordArray = textView.text.lowercased().components(separatedBy: " ")
+            print(wordArray)
+            
+            if wordArray.contains("testo") {
                 speak("Proveró a leggere un testo.")
                 
                 performSegue(withIdentifier: "readText", sender: nil)
             }
-            else if textView.text.lowercased().contains("vestiti") || textView.text.lowercased().contains("vestito") {
+            else if wordArray.contains("vestiti") || wordArray.contains("vestito") {
                 speak("Ti aiuteró a scegliere i vestiti.")
                 
                 performSegue(withIdentifier: "recognizeClothes", sender: nil)
             }
-            else if textView.text.lowercased().contains("codice a barre") || textView.text.lowercased().contains("barcode") {
+            else if textView.text.lowercased().contains("codice a barre") || wordArray.contains("barcode") {
                 speak("Ti aiuteró a identificare un codice a barre.")
                 
                 performSegue(withIdentifier: "recognizeBarCode", sender: nil)
@@ -239,7 +269,7 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
             else{
                 var flag = 0
                 labels.values.forEach { (s) in
-                    if textView.text.lowercased().contains(s) {
+                    if wordArray.contains(s) {
                         flag = 1
                         self.objectDetected = s
                         speak("Sto cercando " + s)
@@ -257,16 +287,6 @@ class SpeakViewController: UIViewController,  SFSpeechRecognizerDelegate {
                 else {
                     speak("Non riesco ad aiutarti. Riprova per favore.")
                 }
-            }
-        } else {
-            self.synthetizer.stopSpeaking(at: .immediate)
-            micImage.tintColor = UIColor.systemPink
-            AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-            do {
-                try startRecording()
-                self.label.text! = "Agita il dispositivo per fermare la registrazione."
-            } catch {
-                self.label.text! = "Registrazione non disponibile."
             }
         }
     }

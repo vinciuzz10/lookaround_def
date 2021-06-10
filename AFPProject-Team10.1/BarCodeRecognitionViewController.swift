@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 
 
-// MARK: -ScannerClass
+// MARK: ScannerClass
 
 class Scanner: NSObject {
     

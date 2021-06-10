@@ -17,15 +17,6 @@ class TextRecognitionViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         configureDocumentView()
-        
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
-//            tap.numberOfTapsRequired = 2
-//            view.addGestureRecognizer(tap)
-//        
-//        let string = "Sto cercando un computer"
-//        if string.lowercased().contains("computer") {
-//            print("Ciao")
-//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

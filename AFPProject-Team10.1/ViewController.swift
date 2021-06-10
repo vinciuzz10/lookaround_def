@@ -13,6 +13,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     var dispatchWorkItem: DispatchWorkItem?
     
     @IBOutlet weak private var previewView: UIView!
+    
     private let session = AVCaptureSession()
     private var previewLayer: AVCaptureVideoPreviewLayer! = nil
     private let videoDataOutput = AVCaptureVideoDataOutput()
