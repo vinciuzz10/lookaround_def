@@ -12,17 +12,20 @@ import CoreML
 
 class ClothesRecognitionViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    let labelDictionary = ["t-shirt":"Maglietta", "pants":"Pantaloni", "hat":"Cappello", "longsleeve":"Maglia a maniche lunghe", "shorts":"Pantaloncini", "undershirt":"Canottiera", "shoes":"Scarpe", "skirt":"Gonna", "blazer":"Giacca", "blouse":"Camicia da donna", "dress":"Vestito da donna", "body":"Body", "hoodie":"Felpa", "outwear":"Giubbotto", "polo":"Polo", "shirt":"Camicia", "top":"Top", "jeans":"Jeans", "anorak":"Giacca a vento", "bomber":"Bomber", "button-down":"Camicia", "caftan":"Caftan", "capris":"Pinocchietto", "cardigan":"Cardigan", "chinos":"Pantalone", "coat":"Cappotto", "culottes":"Pantalone a zampa d'elefante", "cutoffs":"Pantaloncino da donna", "flannel":"Camicia di flanella", "gaucos":"Pantaloni", "halter":"Top", "henley":"Maglia", "jacket":"Giubbotto", "jeggins":"Jeggins", "jersey":"Maglietta sportiva", "jodhurs":"Pantaloni", "joggers":"Pantaloni di tuta", "jumpsuit":"Salopette", "kimono":"Kimono", "leggings":"Leggings", "parka":"Parka", "peacoat":"Cappotto", "poncho":"Poncho", "robe":"Vestaglia", "romper":"Vestitino", "sarong":"Sarong", "sweater":"Maglione", "sweatpants":"Pantaloni di tuta", "sweatshorts":"Pantaloncini sportivi", "tank":"Canottiera", "tee":"Maglietta", "trunks":"Costume a pantaloncino", "turtleneck":"Maglia a collo alto"]
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageLabel: UILabel!
+    @IBOutlet weak var colorLabel: UILabel!
     
     var synthetizer = AVSpeechSynthesizer()
     
-    var model: ClothesClassifier_2!
+    var model: ClothesClassifier!
     
     override func viewWillAppear(_ animated: Bool) {
         do {
             let config = MLModelConfiguration()
-            model = try ClothesClassifier_2(configuration: config)
+            model = try ClothesClassifier(configuration: config)
         } catch { print("Errore nel caricamento del modello") }
     }
     
@@ -55,13 +58,12 @@ class ClothesRecognitionViewController: UIViewController, UIImagePickerControlle
             return
         }
         
-        imageView.image = image
-        print("Colore con getColor: " + getColor(image))
+        self.colorLabel.text = getColor(image).capitalized(with: .current)
         
-        let color = image.averageColor!
-        print("Colore con media: " + color.accessibilityName)
+        let scaledImage = image.scalePreservingAspectRatio(targetSize: CGSize(width: 300, height: 300))
+        imageView.image = scaledImage
         
-        guard let ciImage = CIImage(image: image) else {
+        guard let ciImage = CIImage(image: scaledImage) else {
              return
         }
 
@@ -72,16 +74,17 @@ class ClothesRecognitionViewController: UIViewController, UIImagePickerControlle
         // Create request for Vision Core ML model loaded
         let request = VNCoreMLRequest(model: modelml) { [weak self] request, error in
             guard let results = request.results as? [VNClassificationObservation],
-                let prediction = results.first else {
-                    return
-                }
-                
-                // Update the UI on main queue
-                DispatchQueue.main.async { [weak self] in
-                    self?.imageLabel.text = prediction.identifier
-                    self!.speak(self!.imageLabel.text!)
-                }
+            let prediction = results.first else {
+                return
             }
+            
+            // Update the UI on main queue
+            DispatchQueue.main.async { [weak self] in
+                let clothesName = prediction.identifier.lowercased()
+                self?.imageLabel.text = self!.labelDictionary[clothesName]
+                self!.speak(self!.imageLabel.text! + ". Colore: " + self!.colorLabel.text!)
+            }
+        }
         
         let handler = VNImageRequestHandler(ciImage: ciImage)
         DispatchQueue.global(qos: .userInteractive).async {
@@ -156,21 +159,6 @@ class ClothesRecognitionViewController: UIViewController, UIImagePickerControlle
 
 extension UIImage {
     
-    var averageColor: UIColor? {
-        guard let inputImage = CIImage(image: self) else { return nil }
-
-        let extentVector = CIVector(x: inputImage.extent.origin.x + 1950, y: inputImage.extent.origin.y + 1450, z: inputImage.extent.size.width - 1950, w: inputImage.extent.size.height - 1450)
-
-        guard let filter = CIFilter(name: "CIAreaAverage", parameters: [kCIInputImageKey: inputImage, kCIInputExtentKey: extentVector]) else { return nil }
-        guard let outputImage = filter.outputImage else { return nil }
-
-        var bitmap = [UInt8](repeating: 0, count: 4)
-        let context = CIContext(options: [.workingColorSpace: kCFNull])
-        context.render(outputImage, toBitmap: &bitmap, rowBytes: 4, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBA8, colorSpace: nil)
-
-        return UIColor(red: CGFloat(bitmap[0]) / 255, green: CGFloat(bitmap[1]) / 255, blue: CGFloat(bitmap[2]) / 255, alpha: CGFloat(bitmap[3]) / 255)
-    }
-    
     func getPixelColor(pos: CGPoint) -> UIColor {
 
         let pixelData = self.cgImage!.dataProvider!.data
@@ -184,6 +172,34 @@ extension UIImage {
         let a = CGFloat(data[pixelInfo+3]) / CGFloat(255.0)
 
         return UIColor(red: r, green: g, blue: b, alpha: a)
+    }
+    
+    func scalePreservingAspectRatio(targetSize: CGSize) -> UIImage {
+        // Determine the scale factor that preserves aspect ratio
+        let widthRatio = targetSize.width / size.width
+        let heightRatio = targetSize.height / size.height
+        
+        let scaleFactor = min(widthRatio, heightRatio)
+        
+        // Compute the new image size that preserves aspect ratio
+        let scaledImageSize = CGSize(
+            width: size.width * scaleFactor,
+            height: size.height * scaleFactor
+        )
+
+        // Draw and return the resized UIImage
+        let renderer = UIGraphicsImageRenderer(
+            size: scaledImageSize
+        )
+
+        let scaledImage = renderer.image { _ in
+            self.draw(in: CGRect(
+                origin: .zero,
+                size: scaledImageSize
+            ))
+        }
+        
+        return scaledImage
     }
 
 }
